@@ -29,6 +29,46 @@ To enforce accountability, the **Reserve Bank of India (RBI)** issued comprehens
 
 Under the **Credit Information Companies (Regulation) Act, 2005 (CICRA)** and circular **RBI/2023-24/72**:
 
+```mermaid
+graph TD
+    A[Borrower Detects Error: Misreported DPD / Falsely Open Loan] --> B[Step 1: Lodge Formal Dispute with CIBIL / Experian / Bank]
+    B --> C[30-Calendar-Day Clock Commences: T=0]
+    C --> D[Credit Institution Bank/NBFC Investigation Window: Max 21 Days]
+    D --> E{Bank Verifies Records?}
+    E -->|Corrected Data Sent within 21 Days| F[Credit Bureau CIC Ingestion Window: Max 9 Days]
+    E -->|Delayed Beyond 21 Days| G[Bank Enters Default State: Accrues ₹100/day Liability]
+    G --> F
+    F --> H{Total Resolution Time <= 30 Days?}
+    H -->|Yes: <= 30 Days| I[Updated Credit Report Sent to Complainant: No Penalty]
+    H -->|No: > 30 Days| J[Statutory ₹100/Day Delay Compensation Mandated]
+    J --> K[Automatic Direct Credit to Borrower Bank Account within 5 Working Days]
+    J -->|Failure to Pay Compensation| L[Escalation to RBI Ombudsman under RB-IOS 2021]
+
+    classDef primary fill:#1f293d,stroke:#10b981,stroke-width:2px,color:#f8fafc;
+    classDef highlight fill:#111827,stroke:#06b6d4,stroke-width:2px,color:#f8fafc;
+    classDef alert fill:#111827,stroke:#f43f5e,stroke-width:2px,color:#f8fafc;
+    class A,B,C,D,F,I primary;
+    class E,H highlight;
+    class G,J,K,L alert;
+```
+
+### Mathematical Formulation of Bureau Delay Compensation under RBI/2023-24/72
+
+Let $T_{elapsed}$ be the total calendar days from the timestamp of dispute registration until the delivery of the corrected credit file to the consumer:
+
+$$DelayDays = \max(0, \; T_{elapsed} - 30)$$
+
+The aggregate statutory compensation payable directly to the borrower is:
+
+$$Compensation = DelayDays \times ₹100$$
+
+When the delay spans both the Credit Institution ($CI$) and the Credit Information Company ($CIC$), the liability apportionment is governed by:
+
+$$Liability_{CI} = \max(0, \; Days_{CI} - 21) \times ₹100$$
+$$Liability_{CIC} = \max(0, \; Days_{CIC} - 9) \times ₹100$$
+
+Where $Liability_{Total} = Liability_{CI} + Liability_{CIC}$.
+
 ### 1. The Strict 30-Calendar-Day Resolution Window
 Every formal dispute or rectification request raised by a customer regarding erroneous credit information must be conclusively resolved within **30 calendar days** from the date the dispute is lodged with either the Credit Institution (CI - bank/NBFC) or the Credit Information Company (CIC - bureau).
 

@@ -25,7 +25,40 @@ Operating under the principle of **"One Nation, One Ombudsman"**, the scheme pro
 
 ---
 
-## Statutory Framework & Jurisdiction {#statutory-framework}
+```mermaid
+graph TD
+    A[Dispute Occurs: Harassment / Delayed NOC / Bureau Error] --> B[Step 1: Formal Grievance to Lender Branch / Grievance Redressal Officer]
+    B --> C[30-Day Resolution Window Starts]
+    C --> D{Outcome within 30 Days?}
+    D -->|Satisfactorily Resolved| E[Issue Closed]
+    D -->|Rejected / Inadequate Reply| F[Escalate to Principal Nodal Officer PNO]
+    D -->|30 Days Expired with No Resolution| G[Maintainable Ground for RBI Ombudsman]
+    F -->|PNO Fails to Resolve| G
+    G --> H[File on RBI CMS Portal: cms.rbi.org.in]
+    H --> I[Centralised Receipt and Processing Centre CRPC Review]
+    I -->|Maintainable| J[Ombudsman Investigation & Conciliation]
+    J -->|Failure of Conciliation| K[Ombudsman Statutory Award]
+    K --> L[Consequential Loss Award: Up to ₹20,00,000]
+    K --> M[Mental Agony Damages: Up to ₹1,00,000]
+    K --> N[Operational Direction: CIBIL Correction / Return Title Deeds]
+
+    classDef primary fill:#1f293d,stroke:#10b981,stroke-width:2px,color:#f8fafc;
+    classDef highlight fill:#111827,stroke:#06b6d4,stroke-width:2px,color:#f8fafc;
+    classDef alert fill:#111827,stroke:#f43f5e,stroke-width:2px,color:#f8fafc;
+    class A,B,C,F,H,I primary;
+    class D,G,J highlight;
+    class K,L,M,N alert;
+```
+
+### Statutory Award Compensation Formulation
+
+Under Clause 15 of the *Reserve Bank – Integrated Ombudsman Scheme, 2021*, the total monetary award enforceable against the regulated entity is bounded by statutory limits:
+
+$$Compensation_{Total} = \min\left(\sum DirectLoss_{proven}, \; ₹20,00,000\right) + \min\left(Loss_{TimeAgony}, \; ₹1,00,000\right)$$
+
+In cases involving delayed return of original property title documents beyond the statutory 30-day window prescribed under circular *RBI/2023-24/60*, the daily statutory penalty accrues as:
+
+$$Penalty_{Deeds} = ₹5,000 \times \max(0, \; DaysOverdue - 30)$$
 
 ### 1. The Core Ground: "Deficiency in Service"
 The scheme defines "deficiency in service" expansively: any shortcoming, inadequacy, or imperfection in performance undertaken by a regulated entity, including:

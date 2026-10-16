@@ -57,15 +57,44 @@ Card issuers must clearly disclose the Annualized Percentage Rate (APR) along wi
 
 Consider an Indian cardholder who runs an outstanding statement balance of **₹1,00,000** at a typical bank APR of **42.0%** (3.5% monthly):
 
-| Parameter | Value | Statutory / Banking Rule |
-| :--- | :--- | :--- |
-| **Principal Outstanding** | ₹1,00,000 | Current statement balance |
-| **Monthly Finance Charge Rate** | 3.50% | 42.0% annual APR / 12 |
-| **Daily Finance Charge Rate** | 0.115% | 42.0% / 365 days |
-| **Monthly Interest Accrued** | ₹3,500 | ₹1,00,000 × 0.035 |
-| **18% GST on Finance Charge** | ₹630 | ₹3,500 × 0.18 |
-| **Total Monthly Charges** | **₹4,130** | Interest + GST added to balance |
-| **Minimum Amount Due (5% Rule)** | **₹5,206** | 5% of (Principal + Total Charges) |
+```mermaid
+graph TD
+    A[Cardholder Pays Only 5% Minimum Amount Due MAD] --> B[MAD Amount: ₹5,206 on ₹1,00,000 Balance]
+    B --> C[Payment Split Under RBI Allocation Waterfall]
+    C -->|79.3% ₹4,130| D[Finance Charges 3.5% + 18% Statutory GST]
+    C -->|20.7% ₹1,076| E[Actual Principal Reduction]
+    E --> F[New Opening Balance: ₹98,924]
+    F --> G[Subsequent Fresh Purchases]
+    G --> H[Grace Period Extinguished: Immediate Daily Interest from Swipe Date]
+    H --> I[Compounding at 42%-52% Annualized APR]
+    I --> J[142 Months / 11.8 Years Repayment Horizon]
+    J --> K[Total Outflow: ₹2,70,215 for ₹1,00,000 Borrowed]
+
+    classDef primary fill:#1f293d,stroke:#10b981,stroke-width:2px,color:#f8fafc;
+    classDef highlight fill:#111827,stroke:#06b6d4,stroke-width:2px,color:#f8fafc;
+    classDef alert fill:#111827,stroke:#f43f5e,stroke-width:2px,color:#f8fafc;
+    class A,B,C,E primary;
+    class F,G highlight;
+    class D,H,I,J,K alert;
+```
+
+### Mathematical Formulation of Revolving Finance Charges & GST Drag
+
+The daily finance charge ($DFC$) on an Indian credit card with annualized APR $r$ is:
+
+$$DFC = Outstanding \times \left(\frac{r}{365}\right)$$
+
+Under Section 9 of the CGST Act 2017, banking and financial charges attract an inelastic 18% tax:
+
+$$TotalCharge_{daily} = DFC \times (1 + 0.18) = Outstanding \times \left(\frac{r}{365}\right) \times 1.18$$
+
+The effective Annualized Percentage Rate including statutory GST ($APR_{effective}$) escalates:
+
+$$APR_{effective} = r \times 1.18$$
+
+For a standard 42.0% headline APR, the genuine cost of capital is:
+
+$$APR_{effective} = 42.0\% \times 1.18 = 49.56\% \text{ per annum}$$
 
 ### Month-by-Month Amortisation Trajectory Paying Only MAD:
 

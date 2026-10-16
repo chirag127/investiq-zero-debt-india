@@ -50,7 +50,40 @@ Under the **Limitation Act, 1963 (Article 19 & 35)**, the statutory limitation p
 - If a bank files a recovery suit after 3 years, the suit is time-barred and must be dismissed.
 - **The Acknowledgement Trap (Section 18):** If the borrower signs a written letter, balance confirmation slip, or sends an email admitting the debt *before* the 3 years expire, a **fresh 3-year limitation period begins running from the date of that signature**.
 
----
+```mermaid
+graph TD
+    A[Unsecured Loan Default Occurs: 3-Year Limitation Commences] --> B[Bank Files Order 37 CPC Summary Suit in Civil Court]
+    B --> C[Special Form 4 Court Summons Served on Borrower]
+    C --> D{Borrower Action within 10 Days?}
+    D -->|Fails to Enter Appearance within 10 Days| E[Allegations Deemed Admitted: Immediate Money Decree Passed]
+    D -->|Enters Appearance within 10 Days| F[Bank Serves Summons for Judgment]
+    F --> G{Filing Leave to Defend within 10 Days?}
+    G -->|Fails to Apply within 10 Days| E
+    G -->|Files Bona Fide Triable Defense Affidavit| H[Court Grants Unconditional / Conditional Leave to Defend]
+    H --> I[Suit Converted to Regular Civil Trial with Evidence & Cross-Examination]
+    E --> J[Bank Files Order 21 Execution Petition]
+    J --> K[Execution Against Movable Assets / Salary Attachment]
+    K --> L[Section 60 CPC Statutory Exemptions Applied Automatically]
+
+    classDef primary fill:#1f293d,stroke:#10b981,stroke-width:2px,color:#f8fafc;
+    classDef highlight fill:#111827,stroke:#06b6d4,stroke-width:2px,color:#f8fafc;
+    classDef alert fill:#111827,stroke:#f43f5e,stroke-width:2px,color:#f8fafc;
+    class A,B,C,F,H,I,L primary;
+    class D,G highlight;
+    class E,J,K alert;
+```
+
+### Mathematical Formula for Section 60(1)(i) Salary Attachment
+
+Under Section 60(1)(i) of the Code of Civil Procedure 1908, in all non-maintenance debt decrees, the maximum monthly salary that a civil court can order attached is strictly capped:
+
+$$AttachableSalary = \max\left(0, \; \frac{Salary_{net} - ₹1,000}{3}\right)$$
+
+Equivalently, the statutory exempt salary guaranteed to the debtor for basic livelihood is:
+
+$$ExemptSalary = ₹1,000 + \frac{2}{3} \times (Salary_{net} - ₹1,000)$$
+
+Furthermore, under the statutory proviso to Section 60(1)(i), salary attachment cannot exceed **24 consecutive months** under the same decree, after which the debtor's salary is granted absolute immunity from attachment for a further period of 12 months.
 
 ## Salary & Asset Protection under Section 60 CPC {#worked-analysis}
 

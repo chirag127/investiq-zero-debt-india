@@ -28,22 +28,38 @@ However, this statutory power is tightly counterbalanced by mandatory legal time
 
 The enforcement of security interests under SARFAESI follows four distinct statutory milestones:
 
+```mermaid
+graph TD
+    A[NPA Classification: >90 Days Overdue] --> B[Section 13(2) Demand Notice: 60-Day Window]
+    B --> C{Borrower Response within 60 Days?}
+    C -->|Submits Sec 13-3A Representation| D[Bank Statutory Duty: Reply within 15 Days]
+    D -->|Bank Rejects with Reasons| E[Section 13(4) Enforcement Measures]
+    C -->|Default Continues after 60 Days| E
+    E --> F[Symbolic / Physical Possession of Asset]
+    F --> G[Section 17 DRT Appeal: Mandatory 45-Day Window]
+    F --> H[Rule 8-6 / 9-1: Mandatory 30-Day Auction Notice]
+    H --> I[Sec 13-8 Right of Redemption: Pay Full Dues Before Tender Publication]
+    H --> J[Public Auction & Sale Certificate Issued]
+
+    classDef primary fill:#1f293d,stroke:#10b981,stroke-width:2px,color:#f8fafc;
+    classDef highlight fill:#111827,stroke:#06b6d4,stroke-width:2px,color:#f8fafc;
+    classDef alert fill:#111827,stroke:#f43f5e,stroke-width:2px,color:#f8fafc;
+    class A,B,D,F,H primary;
+    class C,G,I highlight;
+    class E,J alert;
 ```
-NPA Classification (90 Days Overdue)
-       │
-       ▼
-Section 13(2) Demand Notice (60-Day Mandatory Window)
-       │
-       ├─► Borrower Representation under Sec 13(3A) ──► Bank Must Reply within 15 Days
-       │
-       ▼ (If Dues Unpaid after 60 Days)
-Section 13(4) Enforcement & Symbolic/Physical Possession
-       │
-       ├─► Right of Appeal to DRT under Section 17 (45-Day Limitation Window)
-       │
-       ▼
-30-Day Mandatory Sale / Public Auction Notice
-```
+
+### Mathematical Formulation of Mortgage Dues and Penal Capitalisation Prohibition
+
+Under RBI circular *RBI/2023-24/53 (Fair Lending Practice - Penal Charges in Loan Accounts)*, lenders are statutorily prohibited from capitalising penal charges into the principal balance for compound interest calculations:
+
+$$Outstanding_{Legal} = Principal_0 \times \left(1 + \frac{r_{contract}}{n}\right)^{nt} + \sum PenalCharges_{flat}$$
+
+Where penal interest cannot earn interest itself. If a secured lender has capitalized penal charges into $Principal_t$ when calculating the Section 13(2) demand amount:
+
+$$Overcharge = Principal_t \times \left[\left(1 + \frac{r_{compounded}}{n}\right)^{nt} - 1\right] - PenalCharges_{flat}$$
+
+Such inflated claims constitute a substantial defect under Section 13(3A) representations.
 
 ### 1. NPA Classification Prerequisite
 A secured creditor cannot issue a SARFAESI notice arbitrarily. The loan account must first be classified as a **Non-Performing Asset (NPA)** pursuant to RBI norms, requiring principal or interest to remain overdue for **more than 90 calendar days**.
@@ -56,6 +72,7 @@ Once an account slips into NPA, the secured creditor issues a formal demand noti
 ### 3. Section 13(3A): Mandatory Right of Objection
 Within the 60-day window, the borrower has the legal right to submit a formal written objection or representation challenging the calculation of dues, interest computation, or asset valuation.
 - **The Bank’s Strict 15-Day Duty:** Under Section 13(3A), the secured creditor **must consider the representation** and communicate its acceptance or rejection with detailed reasons within **15 calendar days** of receipt.
+- **Supreme Court Precedent (*Mardia Chemicals Ltd. v. Union of India, 2004*):** The consideration of borrower objections by the bank is a mandatory statutory safeguard; failure to furnish speaking reasons within 15 days renders subsequent Section 13(4) measures procedurally void.
 
 ### 4. Section 13(4): Measures of Possession
 If the borrower fails to discharge dues within 60 days, the bank may initiate measures under Section 13(4):

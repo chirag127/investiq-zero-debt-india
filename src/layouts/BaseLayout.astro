@@ -54,6 +54,9 @@ const basePath = '/investiq-zero-debt-india/';
     <!-- Favicon SVG -->
     <link rel="icon" type="image/svg+xml" href={`${basePath}favicon.svg`} />
     <link rel="sitemap" href={`${basePath}sitemap-index.xml`} />
+
+    <!-- Local Self-Contained KaTeX CSS (Zero-Tracker) -->
+    <link rel="stylesheet" href={`${basePath}katex.min.css`} />
   </head>
   <body>
     <!-- Top Header -->
@@ -355,6 +358,65 @@ const basePath = '/investiq-zero-debt-india/';
 
       searchInput?.addEventListener('input', (e) => {
         renderSearchResults(e.target.value);
+      });
+    </script>
+
+    <!-- Local KaTeX Auto-Renderer (Zero-Tracker) -->
+    <script is:inline src={`${basePath}katex.min.js`}></script>
+    <script is:inline src={`${basePath}auto-render.min.js`}></script>
+    <script is:inline>
+      document.addEventListener("DOMContentLoaded", function () {
+        if (window.renderMathInElement) {
+          window.renderMathInElement(document.body, {
+            delimiters: [
+              { left: '$$', right: '$$', display: true },
+              { left: '$', right: '$', display: false },
+              { left: '\\(', right: '\\)', display: false },
+              { left: '\\[', right: '\\]', display: true }
+            ],
+            throwOnError: false
+          });
+        }
+      });
+    </script>
+
+    <!-- Local Mermaid JS Renderer (Zero-Tracker) -->
+    <script is:inline src={`${basePath}mermaid.min.js`}></script>
+    <script is:inline>
+      document.addEventListener("DOMContentLoaded", function () {
+        if (window.mermaid) {
+          const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+          window.mermaid.initialize({
+            startOnLoad: false,
+            theme: currentTheme === 'dark' ? 'dark' : 'default',
+            securityLevel: 'loose',
+            fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+          });
+
+          // Convert code.language-mermaid or pre.mermaid to renderable containers
+          const codeBlocks = document.querySelectorAll('pre code.language-mermaid, pre.mermaid');
+          codeBlocks.forEach(async (el, idx) => {
+            const rawGraph = el.textContent || '';
+            const parent = el.closest('pre') || el;
+            const container = document.createElement('div');
+            container.className = 'mermaid-container';
+            container.style.overflowX = 'auto';
+            container.style.margin = '2rem 0';
+            container.style.padding = '1.25rem';
+            container.style.background = 'var(--bg-card)';
+            container.style.border = '1px solid var(--border-subtle)';
+            container.style.borderRadius = 'var(--radius-md)';
+            container.style.textAlign = 'center';
+
+            try {
+              const { svg } = await window.mermaid.render(`mermaid-svg-${idx}`, rawGraph.trim());
+              container.innerHTML = svg;
+              parent.replaceWith(container);
+            } catch (err) {
+              console.warn('Mermaid rendering notice:', err);
+            }
+          });
+        }
       });
     </script>
   </body>

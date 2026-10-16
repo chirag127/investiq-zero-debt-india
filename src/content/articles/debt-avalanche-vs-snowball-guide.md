@@ -50,7 +50,47 @@ Missing even a ₹500 minimum payment on a secondary loan while pouring ₹20,00
 ### 5. 18% GST Drag on All Finance Charges
 In India, finance charges, processing fees, and penalties are subject to mandatory 18% Goods and Services Tax (GST). A 42% credit card APR actually functions as an effective 49.56% annual cash drag when GST is incorporated, dramatically amplifying the mathematical urgency of the Avalanche method.
 
----
+```mermaid
+graph TD
+    A[Total Monthly Debt Budget: e.g. ₹35,000] --> B[Pay Statutory Contractual Minimums Across ALL Debts]
+    B --> C{Strategy Selection for Surplus Capital}
+    C -->|Avalanche Method: Cost Optimality| D[Sort Debts by APR Descending: Highest Interest First]
+    C -->|Snowball Method: Behavioral Momentum| E[Sort Debts by Principal Ascending: Smallest Balance First]
+    D --> F[Pour 100% Surplus into Highest APR e.g. 42% Card]
+    E --> G[Pour 100% Surplus into Smallest Debt e.g. ₹75k Fintech Loan]
+    F --> H[Debt Extinguished: Cascade Released Cashflow to Next Highest APR]
+    G --> I[Debt Extinguished: Quick Psychological Win & Simplified Admin]
+    H --> J[Mathematically Minimizes Total Rupee Interest Outflow]
+    I --> K[Maximizes Human Adherence & Reduces Cognitive Fatigue]
+
+    classDef primary fill:#1f293d,stroke:#10b981,stroke-width:2px,color:#f8fafc;
+    classDef highlight fill:#111827,stroke:#06b6d4,stroke-width:2px,color:#f8fafc;
+    classDef alert fill:#111827,stroke:#f43f5e,stroke-width:2px,color:#f8fafc;
+    class A,B,D,F,H,J primary;
+    class C,E,G,I,K highlight;
+```
+
+### Mathematical Proof of Avalanche Interest Cost Optimality
+
+For any portfolio of $N$ debt facilities with initial balances $B_i(0)$, monthly interest rates $r_i$ (where $r_1 > r_2 > \dots > r_N$), and monthly minimum payments $M_i$:
+
+Let the total monthly capital available be $C > \sum_{i=1}^N M_i$. The discretionary surplus is:
+
+$$S = C - \sum_{i=1}^N M_i$$
+
+Total monthly interest accrued across the portfolio at month $t$ is:
+
+$$Interest_{Total}(t) = \sum_{i=1}^N r_i \times B_i(t)$$
+
+Differentiating the monthly interest accrual with respect to surplus allocation $s_i$ (where $\sum s_i = S$ and $s_i \ge 0$):
+
+$$\frac{\partial Interest_{Total}(t+1)}{\partial s_i} = -r_i$$
+
+Because $r_1 > r_i$ for all $i > 1$, the marginal interest reduction is strictly maximized when:
+
+$$s_1 = S, \quad s_{i > 1} = 0$$
+
+Thus, allocating surplus to the highest interest rate $r_1$ strictly minimizes cumulative portfolio interest $\sum_t Interest_{Total}(t)$ over all repayment periods.
 
 ## Worked Mathematical & Financial Analysis {#worked-analysis}
 

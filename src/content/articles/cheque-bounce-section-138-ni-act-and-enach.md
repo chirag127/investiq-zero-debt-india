@@ -48,15 +48,40 @@ Both statutory provisions prescribe quasi-criminal penalties: **imprisonment for
 
 Consider a borrower whose personal loan auto-debit fails:
 
+```mermaid
+sequenceDiagram
+    autonumber
+    participant Bank as Lender / Complainant
+    participant Clearing as NPCI / Clearing House
+    participant Borrower as Borrower / Drawer
+    participant Court as Metropolitan Magistrate Court
+
+    Bank->>Clearing: Present Cheque or eNACH Mandate
+    Clearing-->>Bank: Dishonour Memo Received (Insufficient Funds)
+    Note over Bank: Mandatory Step: Notice within 30 days
+    Bank->>Borrower: Statutory Demand Notice (Sec 138 NI / Sec 25 PSSA)
+    Note over Borrower: Statutory 15-Day Payment Window
+    alt Borrower Pays within 15 Days
+        Borrower->>Bank: Remits Full Cheque/Mandate Amount
+        Note over Bank,Borrower: Offence Extinguished (No Criminal Liability)
+    else Borrower Fails to Pay within 15 Days
+        Note over Bank,Borrower: Cause of Action Arises on Day 16
+        Note over Bank: 30-Day Strict Limitation Window to File Criminal Complaint
+        Bank->>Court: Files Section 138 / Section 25 Criminal Complaint
+        Court->>Borrower: Issues Summons for Appearance
+        Note over Court,Borrower: Section 143A: Up to 20% Interim Compensation Order
+    end
 ```
-[Day 0]   05 August: eNACH Mandate of ₹25,000 fails due to Insufficient Funds.
-[Day 3]   08 August: Bank receives formal dishonour advice from NPCI.
-[Day 20]  25 August: Bank issues formal Written Legal Demand Notice under Sec 25 PSSA.
-[Day 25]  30 August: Borrower receives the registered legal demand notice.
-[Day 25 to 40] 31 August – 14 September: Statutory 15-DAY PAYMENT WINDOW.
-[Day 41]  15 September: CAUSE OF ACTION ARISES (if dues remain unpaid).
-[Day 41 to 71] 15 Sept – 14 October: Bank's 30-DAY LIMITATION TO FILE COMPLAINT.
-```
+
+### Mathematical Calculation of Statutory Interim Compensation under Section 143A NI Act
+
+Introduced via the Negotiable Instruments (Amendment) Act, 2018, Section 143A empowers the trial court to direct the drawer to deposit interim compensation pending trial:
+
+$$InterimDeposit_{Max} = 0.20 \times ChequeAmount$$
+
+If the trial concludes in an acquittal, the complainant is statutorily mandated to repay the interim compensation along with bank interest at the prevailing RBI repo rate + 2%:
+
+$$RefundAmount = InterimDeposit \times \left(1 + \frac{RepoRate + 0.02}{365} \times t_{trial\_days}\right)$$
 
 ### Critical Legal Principles
 
