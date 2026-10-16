@@ -52,16 +52,16 @@ In India, finance charges, processing fees, and penalties are subject to mandato
 
 ```mermaid
 graph TD
-    A[Total Monthly Debt Budget: e.g. ₹35,000] --> B[Pay Statutory Contractual Minimums Across ALL Debts]
-    B --> C{Strategy Selection for Surplus Capital}
-    C -->|Avalanche Method: Cost Optimality| D[Sort Debts by APR Descending: Highest Interest First]
-    C -->|Snowball Method: Behavioral Momentum| E[Sort Debts by Principal Ascending: Smallest Balance First]
-    D --> F[Pour 100% Surplus into Highest APR e.g. 42% Card]
-    E --> G[Pour 100% Surplus into Smallest Debt e.g. ₹75k Fintech Loan]
-    F --> H[Debt Extinguished: Cascade Released Cashflow to Next Highest APR]
-    G --> I[Debt Extinguished: Quick Psychological Win & Simplified Admin]
-    H --> J[Mathematically Minimizes Total Rupee Interest Outflow]
-    I --> K[Maximizes Human Adherence & Reduces Cognitive Fatigue]
+    A["Total Monthly Debt Budget: e.g. 35,000"] --> B["Pay Statutory Contractual Minimums Across ALL Debts"]
+    B --> C{"Strategy Selection for Surplus Capital"}
+    C -->|Avalanche Method: Cost Optimality| D["Sort Debts by APR Descending: Highest Interest First"]
+    C -->|Snowball Method: Behavioral Momentum| E["Sort Debts by Principal Ascending: Smallest Balance First"]
+    D --> F["Pour 100% Surplus into Highest APR e.g. 42% Card"]
+    E --> G["Pour 100% Surplus into Smallest Debt e.g. 75k Fintech Loan"]
+    F --> H["Debt Extinguished: Cascade Released Cashflow to Next"]
+    G --> I["Debt Extinguished: Quick Psychological Win"]
+    H --> J["Mathematically Minimizes Total Rupee Interest Outflow"]
+    I --> K["Maximizes Human Adherence and Reduces Cognitive Fatigue"]
 
     classDef primary fill:#1f293d,stroke:#10b981,stroke-width:2px,color:#f8fafc;
     classDef highlight fill:#111827,stroke:#06b6d4,stroke-width:2px,color:#f8fafc;

@@ -59,16 +59,16 @@ Consider an Indian cardholder who runs an outstanding statement balance of **₹
 
 ```mermaid
 graph TD
-    A[Cardholder Pays Only 5% Minimum Amount Due MAD] --> B[MAD Amount: ₹5,206 on ₹1,00,000 Balance]
-    B --> C[Payment Split Under RBI Allocation Waterfall]
-    C -->|79.3% ₹4,130| D[Finance Charges 3.5% + 18% Statutory GST]
-    C -->|20.7% ₹1,076| E[Actual Principal Reduction]
-    E --> F[New Opening Balance: ₹98,924]
-    F --> G[Subsequent Fresh Purchases]
-    G --> H[Grace Period Extinguished: Immediate Daily Interest from Swipe Date]
-    H --> I[Compounding at 42%-52% Annualized APR]
-    I --> J[142 Months / 11.8 Years Repayment Horizon]
-    J --> K[Total Outflow: ₹2,70,215 for ₹1,00,000 Borrowed]
+    A["Cardholder Pays Only 5% MAD"] --> B["MAD Amount: 5,206 on 1,00,000 Balance"]
+    B --> C["Payment Split Under RBI Allocation Waterfall"]
+    C -->|79.3% ₹4,130| D["Finance Charges 3.5% + 18% Statutory GST"]
+    C -->|20.7% ₹1,076| E["Actual Principal Reduction"]
+    E --> F["New Opening Balance: 98,924"]
+    F --> G["Subsequent Fresh Purchases"]
+    G --> H["Grace Period Extinguished: Immediate Daily Interest"]
+    H --> I["Compounding at 42%-52% Annualized APR"]
+    I --> J["142 Months Repayment Horizon"]
+    J --> K["Total Outflow: 2,70,215 for 1 Lakh Borrowed"]
 
     classDef primary fill:#1f293d,stroke:#10b981,stroke-width:2px,color:#f8fafc;
     classDef highlight fill:#111827,stroke:#06b6d4,stroke-width:2px,color:#f8fafc;

@@ -27,20 +27,20 @@ Operating under the principle of **"One Nation, One Ombudsman"**, the scheme pro
 
 ```mermaid
 graph TD
-    A[Dispute Occurs: Harassment / Delayed NOC / Bureau Error] --> B[Step 1: Formal Grievance to Lender Branch / Grievance Redressal Officer]
-    B --> C[30-Day Resolution Window Starts]
-    C --> D{Outcome within 30 Days?}
-    D -->|Satisfactorily Resolved| E[Issue Closed]
-    D -->|Rejected / Inadequate Reply| F[Escalate to Principal Nodal Officer PNO]
-    D -->|30 Days Expired with No Resolution| G[Maintainable Ground for RBI Ombudsman]
+    A["Dispute Occurs: Harassment or Delayed NOC"] --> B["Step 1: Formal Grievance to Lender Branch"]
+    B --> C["30-Day Resolution Window Starts"]
+    C --> D{"Outcome within 30 Days?"}
+    D -->|Satisfactorily Resolved| E["Issue Closed"]
+    D -->|Rejected or Inadequate Reply| F["Escalate to Principal Nodal Officer PNO"]
+    D -->|30 Days Expired with No Resolution| G["Maintainable Ground for RBI Ombudsman"]
     F -->|PNO Fails to Resolve| G
-    G --> H[File on RBI CMS Portal: cms.rbi.org.in]
-    H --> I[Centralised Receipt and Processing Centre CRPC Review]
-    I -->|Maintainable| J[Ombudsman Investigation & Conciliation]
-    J -->|Failure of Conciliation| K[Ombudsman Statutory Award]
-    K --> L[Consequential Loss Award: Up to ₹20,00,000]
-    K --> M[Mental Agony Damages: Up to ₹1,00,000]
-    K --> N[Operational Direction: CIBIL Correction / Return Title Deeds]
+    G --> H["File on RBI CMS Portal: cms.rbi.org.in"]
+    H --> I["CRPC Centralised Receipt Review"]
+    I -->|Maintainable| J["Ombudsman Investigation and Conciliation"]
+    J -->|Failure of Conciliation| K["Ombudsman Statutory Award"]
+    K --> L["Consequential Loss Award: Up to 20 Lakhs"]
+    K --> M["Mental Agony Damages: Up to 1 Lakh"]
+    K --> N["Operational Direction: CIBIL Correction"]
 
     classDef primary fill:#1f293d,stroke:#10b981,stroke-width:2px,color:#f8fafc;
     classDef highlight fill:#111827,stroke:#06b6d4,stroke-width:2px,color:#f8fafc;

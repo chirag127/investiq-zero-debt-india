@@ -383,8 +383,8 @@ const basePath = '/investiq-zero-debt-india/';
     <!-- Local Mermaid JS Renderer (Zero-Tracker) -->
     <script is:inline src={`${basePath}mermaid.min.js`}></script>
     <script is:inline>
-      document.addEventListener("DOMContentLoaded", function () {
-        if (window.mermaid) {
+      document.addEventListener("DOMContentLoaded", async function () {
+        if (typeof window.mermaid !== 'undefined') {
           const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
           window.mermaid.initialize({
             startOnLoad: false,
@@ -393,29 +393,30 @@ const basePath = '/investiq-zero-debt-india/';
             fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
           });
 
-          // Convert code.language-mermaid or pre.mermaid to renderable containers
-          const codeBlocks = document.querySelectorAll('pre code.language-mermaid, pre.mermaid');
-          codeBlocks.forEach(async (el, idx) => {
+          const codeBlocks = Array.from(document.querySelectorAll('pre code.language-mermaid, pre.mermaid'));
+          for (let idx = 0; idx < codeBlocks.length; idx++) {
+            const el = codeBlocks[idx];
             const rawGraph = el.textContent || '';
             const parent = el.closest('pre') || el;
             const container = document.createElement('div');
             container.className = 'mermaid-container';
             container.style.overflowX = 'auto';
             container.style.margin = '2rem 0';
-            container.style.padding = '1.25rem';
+            container.style.padding = '1.5rem 1rem';
             container.style.background = 'var(--bg-card)';
             container.style.border = '1px solid var(--border-subtle)';
             container.style.borderRadius = 'var(--radius-md)';
             container.style.textAlign = 'center';
 
             try {
-              const { svg } = await window.mermaid.render(`mermaid-svg-${idx}`, rawGraph.trim());
+              const id = `mermaid-svg-${Date.now()}-${idx}`;
+              const { svg } = await window.mermaid.render(id, rawGraph.trim());
               container.innerHTML = svg;
               parent.replaceWith(container);
             } catch (err) {
-              console.warn('Mermaid rendering notice:', err);
+              console.warn('Mermaid rendering notice for block', idx, err);
             }
-          });
+          }
         }
       });
     </script>

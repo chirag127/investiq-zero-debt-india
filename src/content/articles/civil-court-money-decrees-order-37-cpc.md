@@ -52,18 +52,18 @@ Under the **Limitation Act, 1963 (Article 19 & 35)**, the statutory limitation p
 
 ```mermaid
 graph TD
-    A[Unsecured Loan Default Occurs: 3-Year Limitation Commences] --> B[Bank Files Order 37 CPC Summary Suit in Civil Court]
-    B --> C[Special Form 4 Court Summons Served on Borrower]
-    C --> D{Borrower Action within 10 Days?}
-    D -->|Fails to Enter Appearance within 10 Days| E[Allegations Deemed Admitted: Immediate Money Decree Passed]
-    D -->|Enters Appearance within 10 Days| F[Bank Serves Summons for Judgment]
-    F --> G{Filing Leave to Defend within 10 Days?}
+    A["Unsecured Loan Default: 3-Year Limitation Commences"] --> B["Bank Files Order 37 CPC Summary Suit in Civil Court"]
+    B --> C["Special Form 4 Court Summons Served on Borrower"]
+    C --> D{"Borrower Action within 10 Days?"}
+    D -->|Fails to Enter Appearance within 10 Days| E["Allegations Deemed Admitted: Money Decree Passed"]
+    D -->|Enters Appearance within 10 Days| F["Bank Serves Summons for Judgment"]
+    F --> G{"Filing Leave to Defend within 10 Days?"}
     G -->|Fails to Apply within 10 Days| E
-    G -->|Files Bona Fide Triable Defense Affidavit| H[Court Grants Unconditional / Conditional Leave to Defend]
-    H --> I[Suit Converted to Regular Civil Trial with Evidence & Cross-Examination]
-    E --> J[Bank Files Order 21 Execution Petition]
-    J --> K[Execution Against Movable Assets / Salary Attachment]
-    K --> L[Section 60 CPC Statutory Exemptions Applied Automatically]
+    G -->|Files Bona Fide Triable Defense Affidavit| H["Court Grants Leave to Defend"]
+    H --> I["Suit Converted to Regular Civil Trial"]
+    E --> J["Bank Files Order 21 Execution Petition"]
+    J --> K["Execution Against Salary Attachment"]
+    K --> L["Section 60 CPC Statutory Exemptions Applied"]
 
     classDef primary fill:#1f293d,stroke:#10b981,stroke-width:2px,color:#f8fafc;
     classDef highlight fill:#111827,stroke:#06b6d4,stroke-width:2px,color:#f8fafc;

@@ -31,18 +31,18 @@ Under the **Credit Information Companies (Regulation) Act, 2005 (CICRA)** and ci
 
 ```mermaid
 graph TD
-    A[Borrower Detects Error: Misreported DPD / Falsely Open Loan] --> B[Step 1: Lodge Formal Dispute with CIBIL / Experian / Bank]
-    B --> C[30-Calendar-Day Clock Commences: T=0]
-    C --> D[Credit Institution Bank/NBFC Investigation Window: Max 21 Days]
-    D --> E{Bank Verifies Records?}
-    E -->|Corrected Data Sent within 21 Days| F[Credit Bureau CIC Ingestion Window: Max 9 Days]
-    E -->|Delayed Beyond 21 Days| G[Bank Enters Default State: Accrues ₹100/day Liability]
+    A["Borrower Detects Error: Misreported DPD or Open Loan"] --> B["Step 1: Lodge Formal Dispute with CIBIL or Bank"]
+    B --> C["30-Calendar-Day Clock Commences: T=0"]
+    C --> D["Lender Investigation Window: Max 21 Days"]
+    D --> E{"Bank Verifies Records?"}
+    E -->|Corrected Data Sent within 21 Days| F["Credit Bureau Ingestion Window: Max 9 Days"]
+    E -->|Delayed Beyond 21 Days| G["Bank Enters Default: Accrues 100/day Liability"]
     G --> F
-    F --> H{Total Resolution Time <= 30 Days?}
-    H -->|Yes: <= 30 Days| I[Updated Credit Report Sent to Complainant: No Penalty]
-    H -->|No: > 30 Days| J[Statutory ₹100/Day Delay Compensation Mandated]
-    J --> K[Automatic Direct Credit to Borrower Bank Account within 5 Working Days]
-    J -->|Failure to Pay Compensation| L[Escalation to RBI Ombudsman under RB-IOS 2021]
+    F --> H{"Total Resolution Time <= 30 Days?"}
+    H -->|Yes: <= 30 Days| I["Updated Credit Report Delivered: No Penalty"]
+    H -->|No: > 30 Days| J["Statutory 100/Day Delay Compensation Mandated"]
+    J --> K["Automatic Direct Credit within 5 Working Days"]
+    J -->|Failure to Pay Compensation| L["Escalation to RBI Ombudsman under RB-IOS 2021"]
 
     classDef primary fill:#1f293d,stroke:#10b981,stroke-width:2px,color:#f8fafc;
     classDef highlight fill:#111827,stroke:#06b6d4,stroke-width:2px,color:#f8fafc;

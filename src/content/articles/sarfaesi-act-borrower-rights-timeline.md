@@ -30,16 +30,16 @@ The enforcement of security interests under SARFAESI follows four distinct statu
 
 ```mermaid
 graph TD
-    A[NPA Classification: >90 Days Overdue] --> B[Section 13(2) Demand Notice: 60-Day Window]
-    B --> C{Borrower Response within 60 Days?}
-    C -->|Submits Sec 13-3A Representation| D[Bank Statutory Duty: Reply within 15 Days]
-    D -->|Bank Rejects with Reasons| E[Section 13(4) Enforcement Measures]
+    A["NPA Classification: Over 90 Days Overdue"] --> B["Section 13(2) Demand Notice: 60-Day Window"]
+    B --> C{"Borrower Response within 60 Days?"}
+    C -->|Submits Sec 13-3A Representation| D["Bank Statutory Duty: Reply within 15 Days"]
+    D -->|Bank Rejects with Reasons| E["Section 13(4) Enforcement Measures"]
     C -->|Default Continues after 60 Days| E
-    E --> F[Symbolic / Physical Possession of Asset]
-    F --> G[Section 17 DRT Appeal: Mandatory 45-Day Window]
-    F --> H[Rule 8-6 / 9-1: Mandatory 30-Day Auction Notice]
-    H --> I[Sec 13-8 Right of Redemption: Pay Full Dues Before Tender Publication]
-    H --> J[Public Auction & Sale Certificate Issued]
+    E --> F["Symbolic or Physical Possession of Asset"]
+    F --> G["Section 17 DRT Appeal: Mandatory 45-Day Window"]
+    F --> H["Rule 8(6) / 9(1): Mandatory 30-Day Auction Notice"]
+    H --> I["Sec 13(8) Right of Redemption: Pay Full Dues Before Tender"]
+    H --> J["Public Auction & Sale Certificate Issued"]
 
     classDef primary fill:#1f293d,stroke:#10b981,stroke-width:2px,color:#f8fafc;
     classDef highlight fill:#111827,stroke:#06b6d4,stroke-width:2px,color:#f8fafc;
