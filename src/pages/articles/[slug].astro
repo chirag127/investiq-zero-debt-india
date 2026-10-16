@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('articles');
+  return articles.map((article) => ({
+    params: { slug: article.slug },
+    props: { article }
+  }));
+}
+
+const { article } = Astro.props;
+const { Content } = await article.render();
+
+const tableOfContents = [
+  { id: 'overview', title: 'Executive Overview' },
+  { id: 'statutory-framework', title: 'Statutory Framework' },
+  { id: 'worked-analysis', title: 'Worked Mathematical / Legal Analysis' },
+  { id: 'actionable-checklist', title: 'Borrower Actionable Checklist' },
+  { id: 'common-pitfalls', title: 'Pitfalls & Non-Compliances' }
+];
+---
+
+<BaseLayout
+  title={article.data.title}
+  description={article.data.description}
+  category={article.data.category}
+  verifiedOn={article.data.verifiedOn}
+  lastUpdated={article.data.lastUpdated}
+  statutoryReferences={article.data.statutoryReferences}
+  tableOfContents={tableOfContents}
+>
+  <div class="page-header">
+    <div style="display: flex; gap: 0.5rem; margin-bottom: 0.75rem;">
+      <span class="meta-tag">{article.data.category.toUpperCase().replace('-', ' ')}</span>
+      <span style="font-size: 0.8rem; background: var(--bg-tertiary); padding: 0.2rem 0.5rem; border-radius: var(--radius-sm); color: var(--text-muted);">
+        {article.data.readingTime}
+      </span>
+    </div>
+
+    <h1 class="page-title">{article.data.title}</h1>
+    <p class="page-subtitle">{article.data.description}</p>
+
+    <div class="meta-bar">
+      <span class="meta-verified">✓ Verified against Gazette & RBI Directives</span>
+      <span>•</span>
+      <span>Statutory Rigor: {article.data.verifiedOn}</span>
+    </div>
+
+    <div class="callout-box info" style="margin-top: 1.5rem; margin-bottom: 0;">
+      <div class="callout-title">Primary Strategic Takeaway</div>
+      <p style="margin: 0; font-size: 0.95rem;">{article.data.primaryTakeaway}</p>
+    </div>
+
+    {article.data.riskWarning && (
+      <div class="callout-box alert" style="margin-top: 1rem; margin-bottom: 0;">
+        <div class="callout-title">Critical Statutory Risk Warning</div>
+        <p style="margin: 0; font-size: 0.95rem;">{article.data.riskWarning}</p>
+      </div>
+    )}
+  </div>
+
+  <article class="prose">
+    <Content />
+  </article>
+
+  <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+    <a href="/investiq-zero-debt-india/articles/" class="btn btn-secondary btn-sm">← Back to Guides Library</a>
+    <a href="/investiq-zero-debt-india/corrections/" style="font-size: 0.85rem; color: var(--text-muted);">Found an inconsistency? Report an error →</a>
+  </div>
+</BaseLayout>

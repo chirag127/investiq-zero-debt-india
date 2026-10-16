@@ -1,0 +1,294 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="RBI Complaint Preparation & Statutory Delay Checker"
+  description="Interactive borrower rights diagnostic and grievance drafter. Identifies illegal recovery agent calling hours (outside 8 AM - 7 PM), harassment, and calculates ₹100/day statutory credit bureau delay compensation under RBI/2023-24/72."
+  category="recovery-rights"
+  verifiedOn="2026-10-17"
+  lastUpdated="2026-10-17"
+  statutoryReferences={[
+    'RBI Master Direction – Fair Practices Code',
+    'RBI Circular RBI/2023-24/72 (DoR.FIN.REC.48/20.16.003/2023-24)',
+    'Reserve Bank – Integrated Ombudsman Scheme (RB-IOS 2021)'
+  ]}
+  tableOfContents={[
+    { id: 'diagnostic-tool', title: 'Interactive Violation Checker' },
+    { id: 'compensation-calculator', title: '₹100/Day Delay Compensation' },
+    { id: 'draft-letter-generator', title: 'Grievance Letter Drafter' },
+    { id: 'escalation-hierarchy', title: 'RBI 3-Tier Escalation Hierarchy' }
+  ]}
+>
+  <div class="page-header">
+    <span class="meta-tag">Interactive Diagnostic & Drafter</span>
+    <h1 class="page-title">RBI Complaint Drafter & Delay Compensation Checker</h1>
+    <p class="page-subtitle">
+      Assess whether your lender or recovery agents have violated RBI Fair Practices Codes, check your statutory entitlement to ₹100/day compensation for credit bureau delays, and generate an official grievance notice.
+    </p>
+    <div class="meta-bar">
+      <span class="meta-verified">✓ RBI Master Direction Compliant</span>
+      <span>•</span>
+      <span>100% Client-Side Local Generation</span>
+      <span>•</span>
+      <span>No Sensitive Data Sent Online</span>
+    </div>
+  </div>
+
+  <section id="diagnostic-tool" class="tool-container">
+    <h2 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 1.25rem;">1. Recovery Agent Conduct Diagnostic</h2>
+    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+      Select any actions you or your family members have experienced from bank or NBFC recovery agents:
+    </p>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
+      <label style="display: flex; gap: 0.75rem; align-items: flex-start; background: var(--bg-secondary); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); cursor: pointer;">
+        <input type="checkbox" id="chk-hours" class="violation-chk" style="margin-top: 0.25rem;" />
+        <div>
+          <strong style="color: var(--text-primary); font-size: 0.9rem;">Calling Outside 8:00 AM – 7:00 PM</strong>
+          <p style="font-size: 0.775rem; color: var(--text-muted); margin-top: 0.2rem;">Calls, SMS, or WhatsApp messages received before 8:00 AM or after 7:00 PM.</p>
+        </div>
+      </label>
+
+      <label style="display: flex; gap: 0.75rem; align-items: flex-start; background: var(--bg-secondary); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); cursor: pointer;">
+        <input type="checkbox" id="chk-family" class="violation-chk" style="margin-top: 0.25rem;" />
+        <div>
+          <strong style="color: var(--text-primary); font-size: 0.9rem;">Harassing Family Members or Contacts</strong>
+          <p style="font-size: 0.775rem; color: var(--text-muted); margin-top: 0.2rem;">Calling relatives, friends, or workplace references who are not co-borrowers or guarantors.</p>
+        </div>
+      </label>
+
+      <label style="display: flex; gap: 0.75rem; align-items: flex-start; background: var(--bg-secondary); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); cursor: pointer;">
+        <input type="checkbox" id="chk-abuse" class="violation-chk" style="margin-top: 0.25rem;" />
+        <div>
+          <strong style="color: var(--text-primary); font-size: 0.9rem;">Abusive Language or Physical Intimidation</strong>
+          <p style="font-size: 0.775rem; color: var(--text-muted); margin-top: 0.2rem;">Threats of police arrest, non-bailable warrants, or verbal humiliation.</p>
+        </div>
+      </label>
+
+      <label style="display: flex; gap: 0.75rem; align-items: flex-start; background: var(--bg-secondary); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); cursor: pointer;">
+        <input type="checkbox" id="chk-id" class="violation-chk" style="margin-top: 0.25rem;" />
+        <div>
+          <strong style="color: var(--text-primary); font-size: 0.9rem;">Failure to Display ID or Authorization Letter</strong>
+          <p style="font-size: 0.775rem; color: var(--text-muted); margin-top: 0.2rem;">Agents visiting home without presenting official bank identity cards and BCI authorization letters.</p>
+        </div>
+      </label>
+    </div>
+
+    <h2 id="compensation-calculator" style="font-size: 1.3rem; font-weight: 700; margin-bottom: 1.25rem;">2. Credit Bureau Dispute Delay Compensation</h2>
+    <div style="background: var(--bg-secondary); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); margin-bottom: 2rem;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+        <div>
+          <div class="form-group">
+            <label for="dispute-days-input" class="form-label">Calendar Days Since Formal Dispute Filed</label>
+            <input type="number" id="dispute-days-input" class="form-input" value="45" min="1" max="365" />
+            <p class="form-hint">Statutory resolution window under RBI/2023-24/72 is exactly 30 calendar days (21 for bank + 9 for CIC).</p>
+          </div>
+        </div>
+
+        <div>
+          <div class="stat-card" style="margin: 0;">
+            <div class="stat-label">Statutory Compensation Due (₹)</div>
+            <div id="stat-comp-rupees" class="stat-value highlight">₹1,500</div>
+            <p id="stat-comp-details" style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">
+              15 days delay beyond 30 days @ ₹100/day.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Letter Generation Form -->
+    <h2 id="draft-letter-generator" style="font-size: 1.3rem; font-weight: 700; margin-bottom: 1.25rem;">3. Generate Formal Grievance Notice</h2>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+      <div class="form-group">
+        <label for="borrower-name" class="form-label">Borrower Full Name</label>
+        <input type="text" id="borrower-name" class="form-input" value="Rohan Sharma" />
+      </div>
+
+      <div class="form-group">
+        <label for="lender-name" class="form-label">Regulated Entity (Bank / NBFC Name)</label>
+        <input type="text" id="lender-name" class="form-input" value="ABC Bank Ltd." />
+      </div>
+
+      <div class="form-group">
+        <label for="loan-acc-no" class="form-label">Loan / Credit Card Account Number</label>
+        <input type="text" id="loan-acc-no" class="form-input" value="PL-9876543210" />
+      </div>
+
+      <div class="form-group">
+        <label for="officer-email" class="form-label">Principal Nodal Officer / GRO Email</label>
+        <input type="text" id="officer-email" class="form-input" value="pno@abcbank.com" />
+      </div>
+    </div>
+
+    <div style="margin-bottom: 1.5rem;">
+      <button id="generate-letter-btn" class="btn btn-primary" type="button">Generate Official Notice</button>
+      <button id="copy-letter-btn" class="btn btn-secondary" type="button" style="margin-left: 0.5rem;">Copy to Clipboard</button>
+    </div>
+
+    <div style="background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.5rem;">
+      <label class="form-label" style="font-size: 0.85rem; color: var(--accent-emerald);">Generated Formal Representation Letter</label>
+      <textarea id="letter-output" class="form-input" rows="14" style="font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.5;" readonly></textarea>
+    </div>
+  </section>
+
+  <article class="prose">
+    <h2 id="escalation-hierarchy">RBI 3-Tier Grievance Escalation Hierarchy</h2>
+    <p>
+      Under the <strong>Reserve Bank – Integrated Ombudsman Scheme (RB-IOS), 2021</strong>, borrowers are legally protected against unilateral harassment, unlawful calling hours, and unauthorized credit bureau reporting. To successfully secure an Ombudsman award or statutory delay compensation, you must follow the statutory 3-tier sequence:
+    </p>
+
+    <h3>Tier 1: Branch / Customer Care Level</h3>
+    <p>
+      Submit a formal written complaint via registered email or written letter stating the exact account number and nature of violation. Always preserve the auto-generated Complaint Ticket / Reference Number.
+    </p>
+
+    <h3>Tier 2: Principal Nodal Officer / Grievance Redressal Officer (GRO)</h3>
+    <p>
+      If the grievance is unresolved within 10 days, escalate directly to the lender's <strong>Principal Nodal Officer (PNO)</strong>. Every RBI-regulated entity is legally required to publish the contact details, phone number, and official address of their PNO on their website and branch premises.
+    </p>
+
+    <h3>Tier 3: The RBI Ombudsman (CMS Portal)</h3>
+    <p>
+      If the regulated entity:
+    </p>
+    <ul>
+      <li>Rejects your grievance wholly or partly, OR</li>
+      <li>Fails to provide a satisfactory resolution within <strong>30 calendar days</strong> of initial receipt.</li>
+    </ul>
+    <p>
+      You have the immediate legal right to file a dispute on the <strong>RBI CMS Portal (cms.rbi.org.in)</strong>. The Ombudsman possesses statutory authority to award up to <strong>₹20 Lakhs</strong> for consequential financial loss and up to <strong>₹1 Lakh</strong> for mental agony and harassment.
+    </p>
+  </article>
+
+  <script is:inline>
+    function updateCompensation() {
+      const days = parseInt(document.getElementById('dispute-days-input')?.value) || 0;
+      const delayed = Math.max(0, days - 30);
+      const compensation = delayed * 100;
+
+      const elRupees = document.getElementById('stat-comp-rupees');
+      const elDetails = document.getElementById('stat-comp-details');
+
+      if (elRupees) elRupees.textContent = '₹' + compensation.toLocaleString('en-IN');
+      if (elDetails) {
+        if (delayed > 0) {
+          elDetails.textContent = `${delayed} calendar days delay beyond 30 days @ ₹100/day under RBI/2023-24/72.`;
+          elRupees.style.color = 'var(--accent-emerald)';
+        } else {
+          elDetails.textContent = `Within the statutory 30-day window. No delay compensation payable yet.`;
+          elRupees.style.color = 'var(--text-muted)';
+        }
+      }
+    }
+
+    function generateNotice() {
+      const name = document.getElementById('borrower-name')?.value || '[Borrower Name]';
+      const lender = document.getElementById('lender-name')?.value || '[Bank / NBFC Name]';
+      const acc = document.getElementById('loan-acc-no')?.value || '[Account Number]';
+      const email = document.getElementById('officer-email')?.value || '[PNO Email]';
+      const days = parseInt(document.getElementById('dispute-days-input')?.value) || 0;
+
+      const vHours = document.getElementById('chk-hours')?.checked;
+      const vFamily = document.getElementById('chk-family')?.checked;
+      const vAbuse = document.getElementById('chk-abuse')?.checked;
+      const vId = document.getElementById('chk-id')?.checked;
+
+      const delayed = Math.max(0, days - 30);
+      const compDue = delayed * 100;
+
+      let violationsText = '';
+      if (vHours) {
+        violationsText += '\n- VIOLATION OF CALLING HOURS: Your recovery agents repeatedly contacted the undersigned before 8:00 AM or after 7:00 PM, in direct contravention of the RBI Master Direction on Fair Practices Code.';
+      }
+      if (vFamily) {
+        violationsText += '\n- INTRUSION OF THIRD-PARTY PRIVACY: Agents have contacted family members and friends who have no contractual liability or guarantor relationship with this facility, violating RBI outsourcing mandates.';
+      }
+      if (vAbuse) {
+        violationsText += '\n- HARASSMENT & INTIMIDATION: Recovery agents have used abusive language and threatened unlawful police arrest for a pure civil breach, violating explicit RBI directives against intimidation.';
+      }
+      if (vId) {
+        violationsText += '\n- UNVERIFIED FIELD AGENTS: Field recovery representatives failed to produce official bank identity cards or authorization letters as mandated under BCI/IBA guidelines.';
+      }
+
+      if (!violationsText) {
+        violationsText = '\n- Non-adherence to Fair Practices Code in loan servicing and recovery communications.';
+      }
+
+      let compText = '';
+      if (delayed > 0) {
+        compText = `\nFurthermore, regarding my credit bureau rectification dispute filed on record ${days} days ago: Under RBI Circular RBI/2023-24/72, your institution was required to resolve and rectify the erroneous record within 30 days. As ${delayed} days have elapsed past the statutory limit, I hereby demand immediate payment of statutory compensation of ₹${compDue.toLocaleString('en-IN')} (calculated @ ₹100 per calendar day of delay) credited directly to my bank account.`;
+      }
+
+      const letter = `Date: ${new Date().toISOString().split('T')[0]}
+
+To:
+The Principal Nodal Officer / Grievance Redressal Officer
+${lender}
+Email: ${email}
+
+SUBJECT: FORMAL GRIEVANCE NOTICE — UNLAWFUL RECOVERY CONDUCT & STATUTORY COMPLAINT UNDER RBI DIRECTIVES
+LOAN / CARD ACCOUNT NO: ${acc}
+
+Dear Sir / Madam,
+
+I am writing to register an urgent formal grievance regarding severe non-compliances and unfair recovery practices conducted in relation to the aforementioned credit account held in the name of ${name}.
+
+The following statutory and regulatory violations have been documented:${violationsText}
+${compText}
+
+Please be advised that under the Reserve Bank – Integrated Ombudsman Scheme (RB-IOS), 2021, and the Master Direction on Fair Practices Code for Lenders, regulated entities are strictly liable for the actions of their outsourced recovery agents.
+
+I hereby request you to:
+1. Immediately issue a written cease-and-desist instruction to all recovery agencies and agents regarding contact outside 8:00 AM – 7:00 PM and third-party intrusions.
+2. Provide a formal grievance resolution reference number within 48 hours.
+3. Rectify any erroneous reporting submitted to Credit Information Companies (CIBIL, Experian, Equifax, CRIF).
+
+Failing a satisfactory resolution within 30 calendar days from the date of this receipt, I shall escalate this matter to the Reserve Bank of India Ombudsman via the CMS Portal (cms.rbi.org.in) seeking consequential compensation and harassment damages.
+
+Yours faithfully,
+
+${name}
+Contact: [Your Phone Number]
+Address: [Your Address]`;
+
+      const output = document.getElementById('letter-output');
+      if (output) output.value = letter;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('dispute-days-input')?.addEventListener('input', () => {
+        updateCompensation();
+        generateNotice();
+      });
+
+      document.querySelectorAll('.violation-chk').forEach(chk => {
+        chk.addEventListener('change', generateNotice);
+      });
+
+      ['borrower-name', 'lender-name', 'loan-acc-no', 'officer-email'].forEach(id => {
+        document.getElementById(id)?.addEventListener('input', generateNotice);
+      });
+
+      document.getElementById('generate-letter-btn')?.addEventListener('click', generateNotice);
+
+      document.getElementById('copy-letter-btn')?.addEventListener('click', () => {
+        const output = document.getElementById('letter-output');
+        if (output) {
+          navigator.clipboard.writeText(output.value).then(() => {
+            const btn = document.getElementById('copy-letter-btn');
+            if (btn) {
+              const orig = btn.textContent;
+              btn.textContent = 'Copied Successfully!';
+              setTimeout(() => { btn.textContent = orig; }, 2000);
+            }
+          });
+        }
+      });
+
+      updateCompensation();
+      generateNotice();
+    });
+  </script>
+</BaseLayout>

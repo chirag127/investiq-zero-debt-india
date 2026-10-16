@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const basePath = '/investiq-zero-debt-india/';
+---
+
+<BaseLayout
+  title="Interactive Financial Calculators & Borrower Tools"
+  description="Client-side debt elimination simulators, credit card APR analyzers, and RBI grievance diagnostic tools. Zero server logging, 100% private, and calibrated to Indian banking regulations."
+  showSidebars={false}
+>
+  <div class="page-header" style="text-align: center; max-width: 800px; margin: 0 auto 3rem auto;">
+    <span class="meta-tag">Indian Borrower Utilities</span>
+    <h1 class="page-title">Interactive Financial Tools & Diagnostic Drafters</h1>
+    <p class="page-subtitle">
+      Eliminate high-interest debt strategically, expose credit card compounding traps, and enforce statutory rights against predatory collection practices with our client-side calculators.
+    </p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; max-width: 1100px; margin: 0 auto;">
+    <!-- Tool 1 -->
+    <div class="card-widget" style="padding: 2rem; display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+          <span style="font-size: 0.75rem; background: var(--accent-emerald-subtle); color: var(--accent-emerald); font-weight: 700; padding: 0.25rem 0.6rem; border-radius: var(--radius-sm);">OPTIMAL TRIAGE</span>
+          <span style="font-size: 0.8rem; color: var(--text-muted);">Multi-Account</span>
+        </div>
+        <h2 style="font-size: 1.35rem; font-weight: 700; margin-bottom: 0.75rem;">Multi-Loan Avalanche & Snowball Simulator</h2>
+        <p style="font-size: 0.925rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">
+          Compare the mathematical interest savings of the Debt Avalanche (highest APR first) versus the psychological wins of the Debt Snowball across personal loans, credit cards, and auto loans.
+        </p>
+      </div>
+      <a href={`${basePath}tools/debt-payoff-calculator/`} class="btn btn-primary" style="width: 100%;">
+        Open Avalanche Simulator →
+      </a>
+    </div>
+
+    <!-- Tool 2 -->
+    <div class="card-widget" style="padding: 2rem; display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+          <span style="font-size: 0.75rem; background: var(--accent-rose-subtle); color: var(--accent-rose); font-weight: 700; padding: 0.25rem 0.6rem; border-radius: var(--radius-sm);">REVOLVING APR</span>
+          <span style="font-size: 0.8rem; color: var(--text-muted);">42% APR + GST</span>
+        </div>
+        <h2 style="font-size: 1.35rem; font-weight: 700; margin-bottom: 0.75rem;">Credit Card Interest & MAD Payoff Calculator</h2>
+        <p style="font-size: 0.925rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">
+          Simulate the true multi-year cost of paying only the Minimum Amount Due (MAD) on Indian credit cards, including daily interest compounding and mandatory 18% GST on all finance charges.
+        </p>
+      </div>
+      <a href={`${basePath}tools/credit-card-interest-calculator/`} class="btn btn-primary" style="width: 100%;">
+        Open Credit Card Calculator →
+      </a>
+    </div>
+
+    <!-- Tool 3 -->
+    <div class="card-widget" style="padding: 2rem; display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+          <span style="font-size: 0.75rem; background: var(--accent-cyan-subtle); color: var(--accent-cyan); font-weight: 700; padding: 0.25rem 0.6rem; border-radius: var(--radius-sm);">LEGAL RIGHTS</span>
+          <span style="font-size: 0.8rem; color: var(--text-muted);">RBI/2023-24/72</span>
+        </div>
+        <h2 style="font-size: 1.35rem; font-weight: 700; margin-bottom: 0.75rem;">RBI Complaint Drafter & Delay Compensation Checker</h2>
+        <p style="font-size: 0.925rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">
+          Diagnose recovery agent calling violations (outside 8 AM – 7 PM), calculate statutory ₹100/day delay compensation for credit bureau disputes, and draft an official representation to Nodal Officers.
+        </p>
+      </div>
+      <a href={`${basePath}tools/rbi-complaint-checker/`} class="btn btn-primary" style="width: 100%;">
+        Open Complaint Drafter →
+      </a>
+    </div>
+  </div>
+</BaseLayout>

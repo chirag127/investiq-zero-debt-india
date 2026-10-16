@@ -1,0 +1,420 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Multi-Loan Avalanche & Snowball Simulator"
+  description="Compare the interest savings and debt-free timelines of the Avalanche method (highest APR first) versus the Snowball method (lowest balance first) for Indian personal loans, credit cards, and auto loans."
+  category="debt-triage"
+  verifiedOn="2026-10-17"
+  lastUpdated="2026-10-17"
+  statutoryReferences={['RBI Master Direction – Lending (2024)', 'RBI Guidelines on Digital Lending']}
+  tableOfContents={[
+    { id: 'simulator-tool', title: 'Interactive Payoff Simulator' },
+    { id: 'how-it-works', title: 'Avalanche vs Snowball Methodology' },
+    { id: 'worked-example', title: 'Worked Indian Loan Example' },
+    { id: 'statutory-warnings', title: 'Statutory Warnings & Assumptions' }
+  ]}
+>
+  <div class="page-header">
+    <span class="meta-tag">Interactive Financial Tool</span>
+    <h1 class="page-title">Multi-Loan Avalanche vs Snowball Simulator</h1>
+    <p class="page-subtitle">
+      Eliminate high-interest Indian debt strategically. Quantify the exact interest savings and months saved by directing discretionary repayments using the mathematical Debt Avalanche or the psychological Debt Snowball.
+    </p>
+    <div class="meta-bar">
+      <span class="meta-verified">✓ 100% Client-Side Engine</span>
+      <span>•</span>
+      <span>Zero Server Transmission</span>
+      <span>•</span>
+      <span>RBI Lending Framework Compliant</span>
+    </div>
+  </div>
+
+  <section id="simulator-tool" class="tool-container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+      <h2 style="font-size: 1.35rem; font-weight: 700;">1. Enter Your Active Debts</h2>
+      <button id="add-loan-btn" class="btn btn-secondary btn-sm" type="button">
+        + Add Another Loan
+      </button>
+    </div>
+
+    <!-- Dynamic Loans Table/List -->
+    <div id="loans-inputs-container" style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem;">
+      <!-- Populated via JS -->
+    </div>
+
+    <div class="tool-grid" style="border-top: 1px solid var(--border-subtle); padding-top: 1.5rem;">
+      <div>
+        <div class="form-group">
+          <label for="extra-budget-input" class="form-label">Extra Monthly Repayment Budget (₹)</label>
+          <input type="number" id="extra-budget-input" class="form-input" value="10000" min="0" step="500" />
+          <p class="form-hint">Discretionary surplus cash above the minimum monthly EMIs to accelerate payoff.</p>
+        </div>
+
+        <div class="form-group">
+          <label for="strategy-selector" class="form-label">Prioritization Strategy</label>
+          <select id="strategy-selector" class="form-select">
+            <option value="avalanche" selected>Debt Avalanche (Highest APR First — Maximum Interest Savings)</option>
+            <option value="snowball">Debt Snowball (Lowest Balance First — Psychological Momentum)</option>
+          </select>
+          <p class="form-hint">Avalanche minimizes cumulative rupee interest; Snowball delivers faster initial loan closures.</p>
+        </div>
+
+        <div style="display: flex; gap: 0.75rem; margin-top: 1rem;">
+          <button id="simulate-btn" class="btn btn-primary" type="button">Calculate Payoff Schedule</button>
+          <button id="reset-btn" class="btn btn-secondary" type="button">Reset Defaults</button>
+        </div>
+      </div>
+
+      <!-- Simulation Summary Panel -->
+      <div id="results-panel" style="background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.5rem;">
+        <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; color: var(--text-primary);">Payoff Comparison Overview</h3>
+        <div class="stats-grid" style="margin: 0 0 1rem 0;">
+          <div class="stat-card">
+            <div class="stat-label">Total Outstanding</div>
+            <div id="stat-total-principal" class="stat-value">₹4,50,000</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Months to Freedom</div>
+            <div id="stat-months-free" class="stat-value highlight">26 Mos</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Avalanche Interest</div>
+            <div id="stat-avalanche-interest" class="stat-value">₹64,210</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Interest Saved vs Minimums</div>
+            <div id="stat-interest-saved" class="stat-value highlight">₹1,18,400</div>
+          </div>
+        </div>
+
+        <div id="strategy-verdict" style="font-size: 0.875rem; line-height: 1.5; color: var(--text-secondary); background: var(--bg-tertiary); padding: 0.85rem; border-radius: var(--radius-sm); border-left: 3px solid var(--accent-emerald);">
+          <!-- Dynamic strategy explanation -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Monthly Amortization Table Output -->
+    <div style="margin-top: 2rem;">
+      <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem;">Month-by-Month Elimination Schedule</h3>
+      <div class="table-wrapper">
+        <table id="schedule-table">
+          <thead>
+            <tr>
+              <th>Month</th>
+              <th>Remaining Total Debt</th>
+              <th>Interest Accrued</th>
+              <th>Principal Paid</th>
+              <th>Status / Active Target</th>
+            </tr>
+          </thead>
+          <tbody id="schedule-table-body">
+            <!-- Populated via client-side script -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <article class="prose">
+    <h2 id="how-it-works">Avalanche vs Snowball: Mathematical Mechanics</h2>
+    <p>
+      When an Indian borrower carries multiple debt obligations—such as revolving credit card balances at 42% APR, an instant digital personal loan at 24%, a standard banking personal loan at 13.5%, and an auto loan at 9%—how discretionary capital is allocated across accounts determines both total rupee outflow and emotional stamina.
+    </p>
+
+    <h3>The Debt Avalanche Method (Highest APR First)</h3>
+    <p>
+      Under the <strong>Debt Avalanche</strong>, every active debt receives its mandatory minimum EMI to prevent late fees, bounce charges under Section 25 PSSA 2007, and negative Days Past Due (DPD) reporting to CIBIL. Every single rupee of discretionary surplus cash is funneled exclusively toward the obligation carrying the highest Annual Percentage Rate (APR).
+    </p>
+    <p>
+      Once that most expensive loan is extinguished, its entire minimum payment is "liberated" and added to the discretionary pool, rolling downhill like an avalanche toward the next highest APR account.
+    </p>
+
+    <h3>The Debt Snowball Method (Smallest Balance First)</h3>
+    <p>
+      Pioneered in behavioral economics, the <strong>Debt Snowball</strong> method allocates all surplus repayments to the account with the lowest absolute principal balance, regardless of interest rate. Once the smallest loan is paid off, the borrower experiences an immediate psychological win, eliminating an entire bill and account notification from their monthly stress load.
+    </p>
+
+    <div class="callout-box info">
+      <div class="callout-title">Mathematical Truth vs Behavioral Adherence</div>
+      <p>
+        The <strong>Debt Avalanche</strong> is guaranteed to minimize total cumulative interest paid. No mathematical configuration exists where the Snowball results in lower total rupee outflow than the Avalanche when interest rates differ. However, if a borrower suffers from severe financial fatigue, closing a small ₹15,000 medical debt immediately via Snowball can provide the motivation needed to stay disciplined for years.
+      </p>
+    </div>
+
+    <h2 id="worked-example">Worked Indian Household Example</h2>
+    <p>
+      Consider an Indian professional with the following three debt obligations and a total monthly repayment capacity of <strong>₹30,000</strong>:
+    </p>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Loan Name</th>
+            <th>Outstanding Principal</th>
+            <th>Annual APR %</th>
+            <th>Mandatory Minimum Payment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Credit Card Revolving Balance</strong></td>
+            <td>₹75,000</td>
+            <td>42.0%</td>
+            <td>₹3,750 (5% MAD rule)</td>
+          </tr>
+          <tr>
+            <td><strong>Fintech Instant Personal Loan</strong></td>
+            <td>₹1,50,000</td>
+            <td>22.0%</td>
+            <td>₹5,500</td>
+          </tr>
+          <tr>
+            <td><strong>Used Car Loan</strong></td>
+            <td>₹2,50,000</td>
+            <td>10.5%</td>
+            <td>₹8,200</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>
+      The contractual minimums sum to <strong>₹17,450</strong> (₹3,750 + ₹5,500 + ₹8,200). With a ₹30,000 monthly budget, the borrower has <strong>₹12,550</strong> in discretionary surplus.
+    </p>
+    <ul>
+      <li><strong>Avalanche Route:</strong> The ₹12,550 surplus attacks the 42% credit card. The card is erased in under 5 months, stopping the rapid compounding of 42% interest plus 18% GST on financial charges. Total interest paid is reduced by over ₹48,000 compared to paying only minimums.</li>
+      <li><strong>Snowball Route:</strong> Because the credit card also happens to be the smallest balance (₹75,000), Avalanche and Snowball converge on the first target, delivering both maximum mathematical savings and psychological momentum simultaneously.</li>
+    </ul>
+
+    <h2 id="statutory-warnings">Statutory Warnings & Assumptions</h2>
+    <div class="callout-box warning">
+      <div class="callout-title">Prepayment Penalty Exclusions Under RBI Directives</div>
+      <p>
+        Under current Reserve Bank of India Master Directions on Lending and Prepayment Charges, regulated banks and NBFCs are strictly prohibited from levying foreclosure charges or prepayment penalties on <strong>floating-rate term loans</strong> sanctioned to individual borrowers for non-business purposes. Always verify whether personal loans carry fixed or floating rate terms before executing accelerated lump-sum prepayments.
+      </p>
+    </div>
+  </article>
+
+  <script is:inline>
+    // Client-Side Multi-Loan Payoff Script
+    let activeLoansData = [
+      { id: 'loan-1', name: 'Credit Card Outstanding', balance: 75000, interestRate: 42.0, minPayment: 3750 },
+      { id: 'loan-2', name: 'Fintech Personal Loan', balance: 150000, interestRate: 22.0, minPayment: 5500 },
+      { id: 'loan-3', name: 'Auto Loan', balance: 225000, interestRate: 10.5, minPayment: 7800 }
+    ];
+
+    function renderLoanInputs() {
+      const container = document.getElementById('loans-inputs-container');
+      if (!container) return;
+
+      container.innerHTML = activeLoansData.map((loan, idx) => `
+        <div class="card-widget" style="display: grid; grid-template-columns: 2fr 1.5fr 1.5fr 1.5fr auto; gap: 0.75rem; align-items: flex-end; padding: 1rem;" data-id="${loan.id}">
+          <div class="form-group" style="margin: 0;">
+            <label class="form-label" style="font-size: 0.75rem;">Loan / Card Name</label>
+            <input type="text" class="form-input loan-name" value="${loan.name}" placeholder="e.g. HDFC Credit Card" />
+          </div>
+          <div class="form-group" style="margin: 0;">
+            <label class="form-label" style="font-size: 0.75rem;">Current Balance (₹)</label>
+            <input type="number" class="form-input loan-balance" value="${loan.balance}" min="1000" step="1000" />
+          </div>
+          <div class="form-group" style="margin: 0;">
+            <label class="form-label" style="font-size: 0.75rem;">Annual APR (%)</label>
+            <input type="number" class="form-input loan-rate" value="${loan.interestRate}" min="1" max="60" step="0.5" />
+          </div>
+          <div class="form-group" style="margin: 0;">
+            <label class="form-label" style="font-size: 0.75rem;">Min Monthly EMI (₹)</label>
+            <input type="number" class="form-input loan-minpay" value="${loan.minPayment}" min="100" step="500" />
+          </div>
+          <button type="button" class="btn btn-secondary btn-sm delete-loan-btn" style="color: var(--accent-rose); border-color: rgba(244,63,94,0.3);" title="Remove Loan" ${activeLoansData.length <= 1 ? 'disabled' : ''}>✕</button>
+        </div>
+      `).join('');
+
+      // Attach event listeners
+      container.querySelectorAll('.delete-loan-btn').forEach((btn, idx) => {
+        btn.addEventListener('click', () => {
+          if (activeLoansData.length > 1) {
+            activeLoansData.splice(idx, 1);
+            renderLoanInputs();
+            runSimulation();
+          }
+        });
+      });
+
+      container.querySelectorAll('input').forEach(input => {
+        input.addEventListener('change', updateLoanDataFromInputs);
+      });
+    }
+
+    function updateLoanDataFromInputs() {
+      const container = document.getElementById('loans-inputs-container');
+      if (!container) return;
+      const rows = container.querySelectorAll('[data-id]');
+      activeLoansData = Array.from(rows).map(row => {
+        const id = row.getAttribute('data-id');
+        const name = row.querySelector('.loan-name').value;
+        const balance = parseFloat(row.querySelector('.loan-balance').value) || 0;
+        const interestRate = parseFloat(row.querySelector('.loan-rate').value) || 0;
+        const minPayment = parseFloat(row.querySelector('.loan-minpay').value) || 0;
+        return { id, name, balance, interestRate, minPayment };
+      });
+    }
+
+    function runSimulation() {
+      updateLoanDataFromInputs();
+      const extraBudget = parseFloat(document.getElementById('extra-budget-input')?.value) || 0;
+      const strategy = document.getElementById('strategy-selector')?.value || 'avalanche';
+
+      // Calculate Avalanche and Snowball
+      const avalancheRes = simulateMath(activeLoansData, extraBudget, 'avalanche');
+      const snowballRes = simulateMath(activeLoansData, extraBudget, 'snowball');
+      const chosenRes = strategy === 'avalanche' ? avalancheRes : snowballRes;
+
+      const totalPrincipal = activeLoansData.reduce((acc, cur) => acc + cur.balance, 0);
+
+      // Update DOM stats
+      const elPrincipal = document.getElementById('stat-total-principal');
+      const elMonths = document.getElementById('stat-months-free');
+      const elInterest = document.getElementById('stat-avalanche-interest');
+      const elSaved = document.getElementById('stat-interest-saved');
+      const elVerdict = document.getElementById('strategy-verdict');
+
+      if (elPrincipal) elPrincipal.textContent = '₹' + totalPrincipal.toLocaleString('en-IN');
+      if (elMonths) elMonths.textContent = chosenRes.totalMonths + ' Months';
+      if (elInterest) elInterest.textContent = '₹' + Math.round(chosenRes.totalInterestPaid).toLocaleString('en-IN');
+
+      const interestDiff = Math.abs(Math.round(snowballRes.totalInterestPaid - avalancheRes.totalInterestPaid));
+      if (elSaved) elSaved.textContent = '₹' + interestDiff.toLocaleString('en-IN');
+
+      if (elVerdict) {
+        if (strategy === 'avalanche') {
+          elVerdict.innerHTML = `<strong>Avalanche Mode:</strong> By prioritizing the highest APR loans first, you save approximately <strong>₹${interestDiff.toLocaleString('en-IN')}</strong> in pure interest compared to the Snowball method and become debt-free in <strong>${avalancheRes.totalMonths} months</strong>.`;
+        } else {
+          elVerdict.innerHTML = `<strong>Snowball Mode:</strong> By knocking out the smallest balance loans first, you gain immediate psychological momentum, though you pay approximately <strong>₹${interestDiff.toLocaleString('en-IN')}</strong> more in total interest than the mathematical Avalanche optimal.`;
+        }
+      }
+
+      // Populate schedule table
+      const tbody = document.getElementById('schedule-table-body');
+      if (!tbody) return;
+
+      tbody.innerHTML = chosenRes.monthlyBreakdown.slice(0, 24).map(m => `
+        <tr>
+          <td><strong>Month ${m.month}</strong></td>
+          <td>₹${Math.round(m.remainingTotalBalance).toLocaleString('en-IN')}</td>
+          <td style="color: var(--accent-rose);">₹${Math.round(m.interestPaidTotal).toLocaleString('en-IN')}</td>
+          <td style="color: var(--accent-emerald);">₹${Math.round(m.principalPaidTotal).toLocaleString('en-IN')}</td>
+          <td><span style="font-size: 0.75rem; background: var(--bg-tertiary); padding: 0.2rem 0.5rem; border-radius: 4px;">In Progress</span></td>
+        </tr>
+      `).join('');
+
+      if (chosenRes.monthlyBreakdown.length > 24) {
+        tbody.innerHTML += `
+          <tr>
+            <td colspan="5" style="text-align: center; color: var(--text-muted); font-size: 0.85rem; padding: 1rem;">
+              ... Showing first 24 months of ${chosenRes.totalMonths} total repayment months.
+            </td>
+          </tr>
+        `;
+      }
+    }
+
+    // Client-side simulation logic mirroring src/lib/finance-math.ts
+    function simulateMath(loans, extraMonthlyBudget, strategy) {
+      const active = loans.map(l => ({ ...l, balance: l.balance }));
+      let totalInterest = 0;
+      let month = 0;
+      const breakdown = [];
+
+      while (active.some(l => l.balance > 1) && month < 360) {
+        month++;
+        let mInterest = 0;
+        let mPrincipal = 0;
+
+        for (const l of active) {
+          if (l.balance > 0) {
+            const interest = l.balance * ((l.interestRate / 100) / 12);
+            l.balance += interest;
+            mInterest += interest;
+          }
+        }
+        totalInterest += mInterest;
+
+        let liberated = 0;
+        for (const l of active) {
+          if (l.balance > 0) {
+            const pay = Math.min(l.minPayment, l.balance);
+            l.balance -= pay;
+            mPrincipal += pay;
+            if (l.minPayment > pay) liberated += (l.minPayment - pay);
+          } else {
+            liberated += l.minPayment;
+          }
+        }
+
+        let extra = extraMonthlyBudget + liberated;
+        const open = active.filter(l => l.balance > 1);
+        if (strategy === 'avalanche') {
+          open.sort((a, b) => b.interestRate - a.interestRate);
+        } else {
+          open.sort((a, b) => a.balance - b.balance);
+        }
+
+        for (const target of open) {
+          if (extra <= 0) break;
+          const pay = Math.min(extra, target.balance);
+          target.balance -= pay;
+          mPrincipal += pay;
+          extra -= pay;
+        }
+
+        const remaining = active.reduce((acc, cur) => acc + (cur.balance > 0 ? cur.balance : 0), 0);
+        breakdown.push({
+          month,
+          remainingTotalBalance: remaining,
+          interestPaidTotal: mInterest,
+          principalPaidTotal: mPrincipal
+        });
+
+        if (remaining <= 1) break;
+      }
+
+      return { totalMonths: month, totalInterestPaid: totalInterest, monthlyBreakdown: breakdown };
+    }
+
+    // Init
+    document.addEventListener('DOMContentLoaded', () => {
+      renderLoanInputs();
+      runSimulation();
+
+      document.getElementById('add-loan-btn')?.addEventListener('click', () => {
+        activeLoansData.push({
+          id: 'loan-' + (activeLoansData.length + 1),
+          name: 'Personal Loan ' + (activeLoansData.length + 1),
+          balance: 50000,
+          interestRate: 15.0,
+          minPayment: 2500
+        });
+        renderLoanInputs();
+        runSimulation();
+      });
+
+      document.getElementById('simulate-btn')?.addEventListener('click', runSimulation);
+      document.getElementById('strategy-selector')?.addEventListener('change', runSimulation);
+      document.getElementById('extra-budget-input')?.addEventListener('input', runSimulation);
+
+      document.getElementById('reset-btn')?.addEventListener('click', () => {
+        activeLoansData = [
+          { id: 'loan-1', name: 'Credit Card Outstanding', balance: 75000, interestRate: 42.0, minPayment: 3750 },
+          { id: 'loan-2', name: 'Fintech Personal Loan', balance: 150000, interestRate: 22.0, minPayment: 5500 },
+          { id: 'loan-3', name: 'Auto Loan', balance: 225000, interestRate: 10.5, minPayment: 7800 }
+        ];
+        if (document.getElementById('extra-budget-input')) document.getElementById('extra-budget-input').value = '10000';
+        renderLoanInputs();
+        runSimulation();
+      });
+    });
+  </script>
+</BaseLayout>

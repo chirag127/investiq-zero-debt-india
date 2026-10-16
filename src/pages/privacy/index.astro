@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Zero-Tracker Privacy Policy & Client-Side Architecture"
+  description="InvestiQ ZeroDebt India strict zero-tracking privacy policy. Zero analytics, zero advertising cookies, zero remote telemetry, and 100% client-side computation."
+  showSidebars={false}
+>
+  <div class="page-header" style="max-width: 800px; margin: 0 auto 2.5rem auto; text-align: center;">
+    <span class="meta-tag">Data Sovereignty</span>
+    <h1 class="page-title">Zero-Tracker Privacy Policy</h1>
+    <p class="page-subtitle">
+      ZeroDebt India operates under a strict "Zero Data Collection" architectural principle.
+    </p>
+  </div>
+
+  <article class="prose" style="max-width: 800px; margin: 0 auto;">
+    <div class="callout-box info">
+      <div class="callout-title">100% Client-Side Processing Guarantee</div>
+      <p style="margin: 0;">
+        ZeroDebt India does not transmit, store, or log any personal data, loan balances, interest rates, or grievance letters entered into our interactive calculators. All data processing occurs exclusively inside your device's browser memory.
+      </p>
+    </div>
+
+    <h2>1. Exactly Zero Trackers and Cookies</h2>
+    <ul>
+      <li><strong>No Google Analytics or Tag Manager:</strong> We run zero analytics scripts that monitor your reading habits or clicks.</li>
+      <li><strong>No Advertising Pixels:</strong> We do not load Meta Pixels, LinkedIn Insight tags, or advertising network trackers.</li>
+      <li><strong>No Session Recording:</strong> We do not deploy Hotjar, Microsoft Clarity, or mouse-tracking software.</li>
+      <li><strong>No Tracking Cookies:</strong> The only browser storage utilized is <code>localStorage</code> to store your aesthetic UI theme preference (Dark or Light mode).</li>
+    </ul>
+
+    <h2>2. Local Calculation Architecture</h2>
+    <p>
+      When you input your outstanding loan amounts, credit card APRs, or generate an RBI formal grievance letter in the <em>RBI Complaint Preparation Drafter</em>:
+    </p>
+    <ul>
+      <li>The financial mathematical engine (<code>src/lib/finance-math.ts</code>) executes locally via JavaScript in your browser thread.</li>
+      <li>Zero network HTTP POST/PUT requests are dispatched.</li>
+      <li>No data is saved to any remote server or persistent cloud database.</li>
+      <li>Closing your browser tab completely flushes all calculation inputs from active memory.</li>
+    </ul>
+
+    <h2>3. Automated Privacy Audit</h2>
+    <p>
+      Our codebase includes an automated audit script (<code>scripts/privacy-scanner.js</code>) that runs during every GitHub Actions build, scanning compiled HTML artifacts to guarantee that no third-party telemetry, remote tracking endpoints, or foreign CDN scripts are included.
+    </p>
+  </article>
+</BaseLayout>

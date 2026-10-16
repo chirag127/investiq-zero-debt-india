@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Corrections & Report an Error"
+  description="How to submit factual corrections, regulatory updates, or calculation anomalies to the InvestiQ ZeroDebt India editorial and quantitative research team."
+  showSidebars={false}
+>
+  <div class="page-header" style="max-width: 800px; margin: 0 auto 2.5rem auto; text-align: center;">
+    <span class="meta-tag">Accountability</span>
+    <h1 class="page-title">Corrections Procedure & Report an Error</h1>
+    <p class="page-subtitle">
+      ZeroDebt India is committed to 100% statutory precision. If you detect an obsolete regulatory circular, an amended section, or a mathematical discrepancy, report it here.
+    </p>
+  </div>
+
+  <article class="prose" style="max-width: 800px; margin: 0 auto;">
+    <h2>1. The Correction Standard</h2>
+    <p>
+      We review all public feedback regarding legal, regulatory, and mathematical accuracy. Corrections are prioritized if they involve:
+    </p>
+    <ul>
+      <li>New Reserve Bank of India Master Directions or circulars superseding older guidelines.</li>
+      <li>Amendments to central statutes (e.g., Bharatiya Nyaya Sanhita revisions affecting Section 138 NI Act or PSSA).</li>
+      <li>Changes in GST rates or tax deduction thresholds under the Income Tax Act.</li>
+      <li>Calculation discrepancies or edge-case failures in our interactive client-side simulators.</li>
+    </ul>
+
+    <h2>2. How to Submit a Correction</h2>
+    <p>
+      Because ZeroDebt India is an open-source project hosted on GitHub, you can submit corrections directly via official repositories or email:
+    </p>
+    <ul>
+      <li><strong>GitHub Issues / Pull Requests:</strong> Submit an issue or pull request directly to our public repository at <a href="https://github.com/chirag127/investiq-zero-debt-india" target="_blank" rel="noopener noreferrer">github.com/chirag127/investiq-zero-debt-india</a>.</li>
+      <li><strong>Direct Editorial Submission:</strong> When reporting an error, include:
+        <ul>
+          <li>The specific URL or article title.</li>
+          <li>The exact sentence or calculation in question.</li>
+          <li>The primary statutory citation (RBI circular number, Gazette notification, or Act section) supporting the correction.</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h2>3. The 48-Hour Resolution Protocol</h2>
+    <p>
+      Upon verifying a reported error against primary official databases, our editorial board amends the article within 48 hours. A public correction notice is appended to the bottom of the article, and the <code>lastUpdated</code> date is adjusted accordingly.
+    </p>
+  </article>
+</BaseLayout>

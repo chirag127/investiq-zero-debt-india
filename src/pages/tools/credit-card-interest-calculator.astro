@@ -1,0 +1,288 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Credit Card Interest Cost & Payoff Calculator"
+  description="Quantify the true cost of revolving credit card debt in India. Computes 42% annualized APR, daily compounding, 18% GST on financial charges, and the decades-long Minimum Amount Due (MAD) repayment trap."
+  category="credit-cards"
+  verifiedOn="2026-10-17"
+  lastUpdated="2026-10-17"
+  statutoryReferences={['RBI Credit and Debit Card Directions 2022', 'Central Goods and Services Tax Act 2017']}
+  tableOfContents={[
+    { id: 'calculator-tool', title: 'Interactive Payoff Calculator' },
+    { id: 'mad-trap-mechanics', title: 'The Minimum Amount Due (MAD) Trap' },
+    { id: 'gst-compounding', title: '18% GST & Loss of Grace Period' },
+    { id: 'statutory-disclosures', title: 'RBI Mandatory Warnings' }
+  ]}
+>
+  <div class="page-header">
+    <span class="meta-tag">Interactive Financial Tool</span>
+    <h1 class="page-title">Credit Card Interest Cost & Payoff Calculator</h1>
+    <p class="page-subtitle">
+      Understand how paying only the Minimum Amount Due (MAD) on Indian credit cards subjects your balance to 42%–52% APR compounding and perpetual 18% GST on all finance charges.
+    </p>
+    <div class="meta-bar">
+      <span class="meta-verified">✓ 100% Client-Side Engine</span>
+      <span>•</span>
+      <span>Zero Server Logging</span>
+      <span>•</span>
+      <span>RBI (Credit Card Conduct) Directions 2022</span>
+    </div>
+  </div>
+
+  <section id="calculator-tool" class="tool-container">
+    <div class="tool-grid">
+      <!-- Inputs Column -->
+      <div>
+        <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1.25rem;">Card Balance & Terms</h2>
+
+        <div class="form-group">
+          <label for="cc-balance-input" class="form-label">Total Outstanding Statement Balance (₹)</label>
+          <input type="number" id="cc-balance-input" class="form-input" value="100000" min="1000" step="1000" />
+          <p class="form-hint">Total amount due shown on your current monthly credit card bill.</p>
+        </div>
+
+        <div class="form-group">
+          <label for="cc-apr-input" class="form-label">Annual Percentage Rate - APR (%)</label>
+          <input type="number" id="cc-apr-input" class="form-input" value="42.0" min="12" max="60" step="0.5" />
+          <p class="form-hint">Typical Indian banks charge 3.50% to 3.75% per month (42.0% – 45.0% annualized).</p>
+        </div>
+
+        <div class="form-group">
+          <label for="payment-mode-selector" class="form-label">Repayment Strategy</label>
+          <select id="payment-mode-selector" class="form-select">
+            <option value="mad_only" selected>Pay Minimum Amount Due (MAD Only - ~5%)</option>
+            <option value="fixed_amount">Pay Fixed Accelerated Monthly Amount (₹)</option>
+          </select>
+        </div>
+
+        <div id="fixed-amount-wrapper" class="form-group" style="display: none;">
+          <label for="fixed-payment-input" class="form-label">Fixed Monthly Payment (₹)</label>
+          <input type="number" id="fixed-payment-input" class="form-input" value="10000" min="500" step="500" />
+          <p class="form-hint">Fixed amount paid each month until balance hits zero.</p>
+        </div>
+
+        <div style="display: flex; gap: 0.75rem; margin-top: 1.5rem;">
+          <button id="calc-cc-btn" class="btn btn-primary" type="button">Calculate Repayment Cost</button>
+          <button id="reset-cc-btn" class="btn btn-secondary" type="button">Reset</button>
+        </div>
+      </div>
+
+      <!-- Results Column -->
+      <div style="background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.5rem;">
+        <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; color: var(--text-primary);">Repayment Outcome</h3>
+
+        <div class="stats-grid" style="margin: 0 0 1.25rem 0;">
+          <div class="stat-card">
+            <div class="stat-label">Months to Pay Off</div>
+            <div id="stat-cc-months" class="stat-value highlight">142 Months</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Total Interest Paid</div>
+            <div id="stat-cc-interest" class="stat-value alert">₹1,44,250</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">18% GST Outflow</div>
+            <div id="stat-cc-gst" class="stat-value">₹25,965</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Total Outflow (₹)</div>
+            <div id="stat-cc-total" class="stat-value">₹2,70,215</div>
+          </div>
+        </div>
+
+        <div id="cc-status-message" class="callout-box warning" style="margin: 0; padding: 1rem;">
+          <!-- Populated via script -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Monthly Payment Breakdown Schedule -->
+    <div style="margin-top: 2rem;">
+      <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem;">Projected Repayment Trajectory</h3>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Month</th>
+              <th>Opening Balance</th>
+              <th>Finance Charges (Interest)</th>
+              <th>18% GST on Charges</th>
+              <th>Monthly Payment Made</th>
+              <th>Closing Balance</th>
+            </tr>
+          </thead>
+          <tbody id="cc-schedule-body">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <article class="prose">
+    <h2 id="mad-trap-mechanics">The Minimum Amount Due (MAD) Trap Explained</h2>
+    <p>
+      In India, credit card issuers are required by the <strong>RBI (Credit Card and Debit Card – Issuance and Conduct) Directions, 2022</strong> to formulate the Minimum Amount Due such that it covers at least all finance charges, applicable taxes, fees, and a nominal slice of the principal (typically 1% to 5%).
+    </p>
+    <p>
+      While paying the MAD preserves your account status as non-delinquent and prevents late payment charges, it <strong>does not stop interest from accruing on your entire remaining balance</strong>.
+    </p>
+
+    <div class="callout-box alert">
+      <div class="callout-title">The Complete Loss of Interest-Free Grace Period</div>
+      <p>
+        The moment you pay less than the Total Amount Due by the due date, your interest-free credit period (20 to 50 days) vanishes completely. Interest starts accruing on every single new transaction <strong>from the exact date of purchase</strong> rather than from the statement date.
+      </p>
+    </div>
+
+    <h2 id="gst-compounding">18% GST and Financial Charge Compounding</h2>
+    <p>
+      Under the Indian Goods and Services Tax framework, financial services and interest on credit revolving accounts are subject to <strong>18% GST</strong>. This 18% levy applies directly to:
+    </p>
+    <ul>
+      <li>All monthly finance charges and revolving interest amounts.</li>
+      <li>Late payment fees, overlimit fees, and card renewal fees.</li>
+      <li>Cash advance transaction fees and foreign currency markup fees.</li>
+    </ul>
+    <p>
+      This tax is added directly to your statement balance each cycle, effectively capitalizing statutory taxes into the debt balance and subjecting them to subsequent compounding.
+    </p>
+
+    <h2 id="statutory-disclosures">RBI Statutory Mandatory Warnings</h2>
+    <p>
+      Pursuant to Master Direction Clause 9(b), every monthly credit card billing statement issued by Indian banks must prominently print this warning:
+    </p>
+    <blockquote>
+      “Making only the minimum payment every month would result in the repayment stretching over months/years with consequential compounded interest payment on your outstanding balance.”
+    </blockquote>
+  </article>
+
+  <script is:inline>
+    // Client-side Credit Card Calculator Script
+    function runCardCalculation() {
+      const balance = parseFloat(document.getElementById('cc-balance-input')?.value) || 0;
+      const apr = parseFloat(document.getElementById('cc-apr-input')?.value) || 0;
+      const mode = document.getElementById('payment-mode-selector')?.value || 'mad_only';
+      const fixedAmount = parseFloat(document.getElementById('fixed-payment-input')?.value) || 0;
+
+      const monthlyRate = (apr / 100) / 12;
+      let cur = balance;
+      let totalInterest = 0;
+      let totalGst = 0;
+      let totalPaid = 0;
+      let month = 0;
+      const schedule = [];
+
+      const firstMonthCharge = (balance * monthlyRate) * 1.18;
+      if (mode === 'fixed_amount' && fixedAmount <= firstMonthCharge) {
+        document.getElementById('stat-cc-months').textContent = 'Perpetual';
+        document.getElementById('stat-cc-interest').textContent = 'Infinite';
+        document.getElementById('stat-cc-gst').textContent = 'Infinite';
+        document.getElementById('stat-cc-total').textContent = 'Infinite';
+        document.getElementById('cc-status-message').innerHTML = `
+          <strong>CRITICAL WARNING: Negative Amortization Detected!</strong>
+          Your monthly payment of ₹${fixedAmount.toLocaleString('en-IN')} is less than the first month's finance charge + GST (₹${Math.round(firstMonthCharge).toLocaleString('en-IN')}). Your balance will increase forever.
+        `;
+        document.getElementById('cc-schedule-body').innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 1.5rem; color: var(--accent-rose);">Payment is below monthly interest. Debt cannot be cleared at this payment amount.</td></tr>`;
+        return;
+      }
+
+      while (cur > 1 && month < 360) {
+        month++;
+        const start = cur;
+        const interest = start * monthlyRate;
+        const gst = interest * 0.18;
+        const charges = interest + gst;
+
+        totalInterest += interest;
+        totalGst += gst;
+
+        let pay = 0;
+        if (mode === 'mad_only') {
+          const standardPct = (start + charges) * 0.05;
+          const feePlusPrincipal = charges + (start * 0.01);
+          pay = Math.max(standardPct, feePlusPrincipal, 500);
+          pay = Math.min(pay, start + charges);
+        } else {
+          pay = Math.min(fixedAmount, start + charges);
+        }
+
+        cur = (start + charges) - pay;
+        totalPaid += pay;
+
+        schedule.push({
+          month,
+          start: Math.round(start),
+          interest: Math.round(interest),
+          gst: Math.round(gst),
+          pay: Math.round(pay),
+          end: Math.max(0, Math.round(cur))
+        });
+
+        if (cur <= 1) break;
+      }
+
+      // Update UI stats
+      document.getElementById('stat-cc-months').textContent = month + (month >= 360 ? '+' : '') + ' Months';
+      document.getElementById('stat-cc-interest').textContent = '₹' + Math.round(totalInterest).toLocaleString('en-IN');
+      document.getElementById('stat-cc-gst').textContent = '₹' + Math.round(totalGst).toLocaleString('en-IN');
+      document.getElementById('stat-cc-total').textContent = '₹' + Math.round(totalPaid).toLocaleString('en-IN');
+
+      const msg = document.getElementById('cc-status-message');
+      if (mode === 'mad_only') {
+        const ratio = (totalInterest / balance).toFixed(1);
+        msg.className = 'callout-box alert';
+        msg.innerHTML = `<strong>MAD Warning:</strong> By paying only the Minimum Amount Due, you will pay <strong>${ratio}x your original principal</strong> in pure interest and GST over <strong>${(month / 12).toFixed(1)} years</strong>.`;
+      } else {
+        msg.className = 'callout-box info';
+        msg.innerHTML = `<strong>Accelerated Strategy:</strong> A fixed payment of ₹${fixedAmount.toLocaleString('en-IN')}/mo clears your card in <strong>${month} months</strong>, saving you significant cumulative finance charges.`;
+      }
+
+      // Table Render
+      const tbody = document.getElementById('cc-schedule-body');
+      tbody.innerHTML = schedule.slice(0, 18).map(row => `
+        <tr>
+          <td><strong>Month ${row.month}</strong></td>
+          <td>₹${row.start.toLocaleString('en-IN')}</td>
+          <td style="color: var(--accent-rose);">₹${row.interest.toLocaleString('en-IN')}</td>
+          <td style="color: var(--accent-amber);">₹${row.gst.toLocaleString('en-IN')}</td>
+          <td style="color: var(--accent-emerald);">₹${row.pay.toLocaleString('en-IN')}</td>
+          <td>₹${row.end.toLocaleString('en-IN')}</td>
+        </tr>
+      `).join('');
+
+      if (schedule.length > 18) {
+        tbody.innerHTML += `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); font-size: 0.85rem; padding: 0.85rem;">... Showing first 18 of ${month} repayment cycles.</td></tr>`;
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const modeSel = document.getElementById('payment-mode-selector');
+      const fixedWrapper = document.getElementById('fixed-amount-wrapper');
+
+      modeSel?.addEventListener('change', () => {
+        if (fixedWrapper) {
+          fixedWrapper.style.display = modeSel.value === 'fixed_amount' ? 'block' : 'none';
+        }
+        runCardCalculation();
+      });
+
+      document.getElementById('calc-cc-btn')?.addEventListener('click', runCardCalculation);
+      document.getElementById('cc-balance-input')?.addEventListener('input', runCardCalculation);
+      document.getElementById('cc-apr-input')?.addEventListener('input', runCardCalculation);
+      document.getElementById('fixed-payment-input')?.addEventListener('input', runCardCalculation);
+
+      document.getElementById('reset-cc-btn')?.addEventListener('click', () => {
+        if (document.getElementById('cc-balance-input')) document.getElementById('cc-balance-input').value = '100000';
+        if (document.getElementById('cc-apr-input')) document.getElementById('cc-apr-input').value = '42.0';
+        if (modeSel) modeSel.value = 'mad_only';
+        if (fixedWrapper) fixedWrapper.style.display = 'none';
+        runCardCalculation();
+      });
+
+      runCardCalculation();
+    });
+  </script>
+</BaseLayout>

@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const articles = await getCollection('articles');
+const basePath = '/investiq-zero-debt-india/';
+
+const categories = [
+  { id: 'debt-triage', name: 'Debt Triage & Math Models', desc: 'Avalanche vs Snowball, effective borrowing costs, and prepayment economics.' },
+  { id: 'credit-cards', name: 'Credit Card Traps & APR', desc: 'Revolving 42% APR, Minimum Amount Due mechanics, and 18% GST compounding.' },
+  { id: 'recovery-rights', name: 'Recovery Agent Codes & Protections', desc: 'RBI Fair Practices Code, 8 AM - 7 PM calling hours, and anti-harassment mandates.' },
+  { id: 'credit-repair', name: 'Credit Bureau & CIBIL Correction', desc: 'Statutory 30-day resolution timeline and ₹100/day compensation claims.' },
+  { id: 'settlement-pitfalls', name: 'Loan Settlement & Haircuts', desc: 'The 7-year "Settled" status penalty, OTS mechanics, and clean NOC procedures.' },
+  { id: 'legal-proceedings', name: 'Secured Debt, SARFAESI & Cheque Bounces', desc: 'SARFAESI Section 13 notice timelines, Sec 138 NI Act, and Sec 25 PSS Act.' }
+];
+---
+
+<BaseLayout
+  title="Indian Debt Triage & Borrower Rights Library"
+  description="Comprehensive repository of 15+ peer-reviewed guides on Indian debt management, RBI lending regulations, SARFAESI enforcement, and statutory credit bureau repair."
+  showSidebars={true}
+>
+  <div class="page-header">
+    <span class="meta-tag">Knowledge Base</span>
+    <h1 class="page-title">Statutory Guides & Borrower Rights Library</h1>
+    <p class="page-subtitle">
+      Explore 15+ comprehensive technical analyses referencing the Reserve Bank of India Master Directions, SARFAESI Act 2002, Negotiable Instruments Act, and Income Tax provisions.
+    </p>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 3rem;">
+    {categories.map((cat) => {
+      const catArticles = articles.filter(a => a.data.category === cat.id);
+      return (
+        <section id={cat.id} style="scroll-margin-top: 5rem;">
+          <div style="border-bottom: 2px solid var(--border-subtle); padding-bottom: 0.75rem; margin-bottom: 1.5rem;">
+            <h2 style="font-size: 1.45rem; font-weight: 700; color: var(--text-primary);">{cat.name}</h2>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.25rem;">{cat.desc}</p>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
+            {catArticles.map((art) => (
+              <a href={`${basePath}articles/${art.slug}/`} class="card-widget" style="text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.2s ease;">
+                <div>
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                    <span style="font-size: 0.75rem; color: var(--accent-emerald); font-weight: 600;">{art.data.readingTime}</span>
+                    <span style="font-size: 0.75rem; color: var(--text-muted);">Verified: {art.data.verifiedOn}</span>
+                  </div>
+                  <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem; line-height: 1.4;">
+                    {art.data.title}
+                  </h3>
+                  <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 1rem;">
+                    {art.data.description}
+                  </p>
+                </div>
+
+                <div style="border-top: 1px solid var(--border-subtle); padding-top: 0.75rem; margin-top: auto; display: flex; justify-content: space-between; align-items: center;">
+                  <span style="font-size: 0.75rem; color: var(--accent-cyan); font-weight: 600;">Read Full Analysis →</span>
+                  <span style="font-size: 0.7rem; color: var(--text-muted); font-family: var(--font-mono);">{art.data.statutoryReferences[0]}</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+      );
+    })}
+  </div>
+</BaseLayout>

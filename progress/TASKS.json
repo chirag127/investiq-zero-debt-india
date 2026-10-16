@@ -1,0 +1,20 @@
+{
+  "siteNumber": 3,
+  "siteName": "ZeroDebtIndia",
+  "publicTitle": "ZeroDebt India — Debt Avalanche, Recovery Rights & Credit Repair",
+  "repository": "investiq-zero-debt-india",
+  "owner": "chirag127",
+  "tasks": [
+    { "id": "task-01", "name": "Initialize Project Plan & Decisions", "status": "completed" },
+    { "id": "task-02", "name": "Primary Indian Statutory Research", "status": "completed" },
+    { "id": "task-03", "name": "Scaffold Astro static application & package.json", "status": "in_progress" },
+    { "id": "task-04", "name": "Implement finance-math.ts and comprehensive unit tests", "status": "pending" },
+    { "id": "task-05", "name": "Build Vanilla CSS design system with sidebars and dark mode", "status": "pending" },
+    { "id": "task-06", "name": "Implement 3 interactive client-side tools", "status": "pending" },
+    { "id": "task-07", "name": "Write 15+ comprehensive technical articles with primary citations", "status": "pending" },
+    { "id": "task-08", "name": "Build static search, glossary, sources registry, and statutory FAQ", "status": "pending" },
+    { "id": "task-09", "name": "Add legal/statutory pages: disclaimer, editorial, privacy, corrections", "status": "pending" },
+    { "id": "task-10", "name": "Verify tests, typechecks, build, and run privacy scanner", "status": "pending" },
+    { "id": "task-11", "name": "Commit, push, and trigger GitHub Pages Actions deployment", "status": "pending" }
+  ]
+}

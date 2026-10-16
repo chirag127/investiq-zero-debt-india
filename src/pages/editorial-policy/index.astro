@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Editorial Standards & Verification Policy"
+  description="InvestiQ ZeroDebt India editorial principles: statutory source verification, fact-checking workflows, non-commercial research integrity, and corrections process."
+  showSidebars={false}
+>
+  <div class="page-header" style="max-width: 800px; margin: 0 auto 2.5rem auto; text-align: center;">
+    <span class="meta-tag">Integrity & Standards</span>
+    <h1 class="page-title">Editorial Policy & Research Principles</h1>
+    <p class="page-subtitle">
+      ZeroDebt India operates as an independent, non-commercial public financial research initiative under the 60-site InvestiQ India network.
+    </p>
+  </div>
+
+  <article class="prose" style="max-width: 800px; margin: 0 auto;">
+    <h2>1. Primary Source Mandate</h2>
+    <p>
+      Our research rejects secondary summaries, sponsored blog posts, and unverified bank marketing literature. Every factual claim regarding legal notice periods, compensation ceilings, interest rate formulations, or loan recovery procedures must be directly anchored to:
+    </p>
+    <ul>
+      <li>Official Gazette notifications of the Government of India.</li>
+      <li>Current Acts of Parliament published on <em>indiacode.nic.in</em>.</li>
+      <li>Active Master Directions, Master Circulars, and specific notifications issued by the Reserve Bank of India (RBI).</li>
+      <li>Binding judgments of the Supreme Court of India, High Courts, and National Consumer Disputes Redressal Commission (NCDRC).</li>
+      <li>Official publications of the Income Tax Department and Central Board of Direct Taxes (CBDT).</li>
+    </ul>
+
+    <h2>2. Treatment of Unverified Claims</h2>
+    <p>
+      If a financial mechanism or debt relief claim cannot be verified against current statutes or regulatory gazettes, it is explicitly prohibited from being presented as current truth. Unresolved or obsolete claims are cataloged in our public <code>UNVERIFIED.md</code> fact-checking backlog.
+    </p>
+
+    <h2>3. Mathematical Independence & Local Processing</h2>
+    <p>
+      All computational models (such as our Multi-Loan Avalanche Simulator and Credit Card APR Compounding Calculator) are implemented in pure vanilla TypeScript, open to public peer audit, and run 100% locally on the user's device. We accept zero financial sponsorship from lenders or debt consolidation companies.
+    </p>
+
+    <h2>4. Corrections & Continuous Review</h2>
+    <p>
+      Financial regulations in India evolve continuously. We conduct periodic audits of our guides against the latest RBI Monetary Policy circulars and legislative amendments. When an error is identified, our editorial board updates the document within 48 hours, annotating the correction with a revised <code>verifiedOn</code> date stamp.
+    </p>
+  </article>
+</BaseLayout>
